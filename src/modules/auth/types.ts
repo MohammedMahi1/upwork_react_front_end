@@ -3,4 +3,6 @@ export type FormType = {
     password: string | null;
     confirmPassword: string | null;
     name: string | null;
+    isLoading: boolean;
+    error: string | null;
 }

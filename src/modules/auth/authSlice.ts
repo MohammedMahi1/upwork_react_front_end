@@ -8,6 +8,8 @@ confirmPassword: null,
 email: null,
 name: null,
 password: null,
+isLoading: false,
+error: null
 }
 
 const authSlice = createSlice({

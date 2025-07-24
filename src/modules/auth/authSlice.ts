@@ -38,7 +38,18 @@ const initialState: initialState = {
 const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {},
+  reducers: {
+    loginSuccess(state, action: PayloadAction<{ token: string }>) {
+      state.token = action.payload.token;
+      state.isAuth = true;
+      localStorage.setItem('token', action.payload.token);
+    },
+    logout(state) {
+      state.token = null;
+      state.isAuth = false;
+      localStorage.removeItem('token');
+    },
+  },
   extraReducers: (builder) => {
     // Login
     builder.addCase(asyncLogin.pending, (state) => {
@@ -68,5 +79,5 @@ const authSlice = createSlice({
     );
   },
 });
-
+export const { loginSuccess, logout } = authSlice.actions;
 export default authSlice.reducer;

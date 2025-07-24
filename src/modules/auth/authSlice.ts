@@ -13,6 +13,7 @@ export const asyncRegister = createAsyncThunk("auth/register", async (formData: 
   const { rejectWithValue } = thunkAPI;
   try {
     const res = await API_AXIOS.post("user/register", formData);
+    await API_AXIOS.post("otp/send",formData.email)
     return res.data;
   } catch (error: any) {
     return console.log(rejectWithValue(error)); 

@@ -1,55 +1,69 @@
 import { API_AXIOS } from "@/api/API_AXIOS";
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import {
+  createAsyncThunk,
+  createSlice,
+  type PayloadAction,
+} from "@reduxjs/toolkit";
 
-export const userAsync = createAsyncThunk("user/getUser", async (userId: string, thunkAPI) => {
-  const { rejectWithValue } = thunkAPI;
-    try{
-        const data = await API_AXIOS.get('user',{
-            headers:{
-                Authorization: `Bearer ${localStorage.getItem("token")}`
-            }
-        });
-        return data.data;
-    }catch (error) {
-        return rejectWithValue(error instanceof Error ? error.message : "An error occurred");
+export const userAsync = createAsyncThunk(
+  "user/getUser",
+  async (_, thunkAPI) => {
+    const { rejectWithValue } = thunkAPI;
+    try {
+      const res = await API_AXIOS.get("user", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      return res.data.user;
+    } catch (error) {
+      return rejectWithValue(
+        error instanceof Error ? error.message : "An error occurred"
+      );
     }
-})
-
+  }
+);
 
 type initialState = {
-  userId: string | null;
+  id: string | null;
   name: string | null;
   email: string | null;
-  isVerified: boolean;
+  is_verify: number;
+  isLoading: boolean;
 };
 
 const initialState: initialState = {
-    name: null,
-    email: null,
-    userId: null,
-    isVerified: false,
-}
+  name: null,
+  email: null,
+  id: null,
+  is_verify: 0,
+  isLoading: false,
+};
 
 const userSlice = createSlice({
-    name:"user",
-    initialState,
-    reducers:{},
-    extraReducers:(builder)=>{
-        builder.addCase(userAsync.pending, (state) => {
-            state.isVerified = false;
-        });
-        builder.addCase(userAsync.fulfilled, (state, action) => {
-            state.userId = action.payload.id;
-            state.name = action.payload.name;
-            state.email = action.payload.email;
-            state.isVerified = action.payload.is_verified;
-        });
-        builder.addCase(userAsync.rejected, (state, action) => {
-            state.isVerified = false;
-            console.error("Error fetching user:", action.payload);
-        });
-    }
-})
+  name: "user",
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(userAsync.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(
+      userAsync.fulfilled,
+      (state, { payload }: PayloadAction<initialState>) => {
 
+        state.isLoading = false;
+        state.id = payload.id;
+        state.name = payload.name;
+        state.email = payload.email;
+        state.is_verify = payload.is_verify;
+      }
+    );
+    builder.addCase(userAsync.rejected, (state, action) => {
+      state.isLoading = false;
+      console.error("Error fetching user:", action.payload);
+    });
+  },
+});
 
 export default userSlice.reducer;

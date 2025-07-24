@@ -15,7 +15,6 @@ const Login = () => {
     setError,
     handleSubmit,
     watch,
-    
     formState: { errors},
   } = useForm<FormType>()
   const onSubmit: SubmitHandler<FormType> = (data) => data
@@ -25,15 +24,10 @@ const Login = () => {
     <div className="flex min-h-svh flex-col items-center justify-center">
       <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-4 w-96 p-4 bg-white rounded-lg shadow-lg items-center'>
         <h1 className='text-2xl font-semibold'>Get started with login</h1>
+        
+        <Input placeholder='Email' type='email' {...register("email",{ required:"Email is required" })} error={errors.email?.message} />
 
-
-        <span className='text-red-400'>{errors.email?.message}</span>
-        <Input placeholder='Email' type='email' {...register("email",{ required:"Email is required" })} />
-
-
-        <span className='text-red-400'>{errors.password?.message}</span>
-        <Input placeholder='Password' type='password' {...register("password",{required:"Password is required"})}/>
-
+        <Input placeholder='Password' type='password' {...register("password",{required:"Password is required"})} error={errors.password?.message}/>
 
         <Button type='submit' size={"lg"} className='w-full'>{isLoading ? <Spinner/>:"Login"}</Button>
 

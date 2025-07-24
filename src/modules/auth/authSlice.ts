@@ -13,7 +13,8 @@ export const asyncRegister = createAsyncThunk("auth/register", async (formData: 
     const res = await API_AXIOS.post("user/register", formData);
     return res.data;
   } catch (error: any) {
-    return rejectWithValue(error.response.data.message);
+    return console.log(rejectWithValue(error));
+    
   }
 })
 
@@ -34,20 +35,16 @@ export const asyncLogin = createAsyncThunk(
 );
 
 type initialState = {
-  isAuth: boolean;
-  token: string | null;
 } & FormType;
 
 
 const initialState: initialState = {
-  confirmPassword: null,
+  password_confirmation: null,
   email: null,
   name: null,
   password: null,
   isLoading: false,
   error: null,
-  isAuth: false,
-  token: null,
 };
 
 const authSlice = createSlice({
@@ -62,9 +59,7 @@ const authSlice = createSlice({
     });
     builder.addCase(asyncRegister.fulfilled, (state, { payload }) => {
       state.isLoading = false;
-      state.isAuth = true;
       localStorage.setItem('token', payload.token);
-      state.token = payload.token;
     });
     builder.addCase(
       asyncRegister.rejected,
@@ -90,10 +85,7 @@ const authSlice = createSlice({
 
     builder.addCase(asyncLogin.fulfilled, (state, { payload }) => {
       state.isLoading = false;
-      state.isAuth = true;
       localStorage.setItem('token', payload.token);
-      console.log(state.isAuth);
-      state.token = payload.token;
     });
 
     builder.addCase(

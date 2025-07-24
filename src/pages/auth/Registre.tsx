@@ -53,10 +53,10 @@ const Registre = () => {
         <Input
           placeholder="Confirme Your Password"
           type="password"
-        {...register("confirmPassword", { required: "Confirme password is required" })}
-          error={errors.confirmPassword?.message}
+        {...register("password_confirmation", { required: "Confirme password is required" })}
+          error={errors.password_confirmation?.message}
         />
-        <Button type="submit" size={"lg"} className="w-full" is>
+        <Button type="submit" size={"lg"} className="w-full" isLoading={isLoading}>
           Registre
         </Button>
         <div className="flex gap-4 text-sm justify-between w-full">

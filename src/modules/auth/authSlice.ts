@@ -6,15 +6,16 @@ import {
 import type { FormType } from "./types";
 import { API_AXIOS } from "@/api/API_AXIOS";
 
+
+
 //Register thunk
-export const asyncRegister = createAsyncThunk("auth/register", async (formData: FormType, thunkAPI) => {
+export const asyncRegister = createAsyncThunk("auth/register", async (formData: FormType,thunkAPI) => {
   const { rejectWithValue } = thunkAPI;
   try {
     const res = await API_AXIOS.post("user/register", formData);
     return res.data;
   } catch (error: any) {
-    return console.log(rejectWithValue(error));
-    
+    return console.log(rejectWithValue(error)); 
   }
 })
 

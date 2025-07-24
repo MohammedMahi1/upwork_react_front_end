@@ -12,8 +12,8 @@ const Login = () => {
         <Input placeholder='Password'/>
         <Button  size={"lg"} className='w-full'>Login</Button>
         <div className='flex gap-4 text-sm justify-between w-full'>
-           <Link href="">I forget password ?</Link>
-           <Link href="">I dont have account</Link>
+           <Link href="/reset-password">I forget password ?</Link>
+           <Link href="/register">I dont have account</Link>
         </div>
       </div>
     </div>

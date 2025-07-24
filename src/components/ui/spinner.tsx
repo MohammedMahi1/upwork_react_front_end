@@ -1,9 +1,10 @@
-import  SpinnerLight from "@/assets/spinner-light.svg?react";
+
+import { LoaderCircle } from "lucide-react";
 
 const Spinner = () => {
   return (
     <div className="animate-spin">
-        <SpinnerLight/>
+        <LoaderCircle />
     </div>
   );
 };

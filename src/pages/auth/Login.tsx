@@ -1,25 +1,64 @@
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import Link from '@/components/ui/link'
-import Spinner from '@/components/ui/spinner'
-import { useAppSelector } from '@/hooks/storeHooks'
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import Link from "@/components/ui/link";
+import { useAppDispatch, useAppSelector } from "@/hooks/storeHooks";
+import { useForm, type SubmitHandler } from "react-hook-form";
+import type { FormType } from "@/modules/auth/types";
+import { asyncLogin } from "@/modules/auth/authSlice";
+import { AlertCircleIcon} from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import {  useNavigate } from "react-router";
+
 const Login = () => {
-  const {isLoading} = useAppSelector(state => state.auth)
+  const { isLoading, error } = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormType>();
+  const onSubmit: SubmitHandler<FormType> = (data) =>
+    dispatch(asyncLogin(data)).unwrap().then(()=>navigate("/user"));
+
   return (
     <div className="flex min-h-svh flex-col items-center justify-center">
-      <div className='flex flex-col gap-4 w-96 p-4 bg-white rounded-lg shadow-lg items-center'>
-        <h1 className='text-2xl font-semibold'>Get started with login</h1>
-        <Input placeholder='Email' />
-        <Input placeholder='Password'/>
-        <Button  size={"lg"} className='w-full'>{isLoading ? <Spinner/>:"Login"}</Button>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex flex-col gap-4 w-96 p-4 bg-white rounded-lg shadow-lg items-center"
+      >
+        <h1 className="text-2xl font-semibold">Get started with login</h1>
+        {
+          error && (
+            <Alert variant="destructive">
+              <AlertCircleIcon />
+              <AlertDescription>{error}</AlertDescription>
+            </Alert>
+          )
+        }
+        <Input
+          placeholder="Email"
+          type="email"
+          {...register("email", { required: "Email is required" })}
+          error={errors.email?.message}
+        />
 
-        <div className='flex gap-4 text-sm justify-between w-full'>
-           <Link href="/reset-password">I forget password ?</Link>
-           <Link href="/register">I dont have account</Link>
+        <Input
+          placeholder="Password"
+          type="password"
+          {...register("password", { required: "Password is required" })}
+          error={errors.password?.message}
+        />
+
+        <Button type="submit" size={"lg"} className="w-full" isLoading={isLoading}>Login</Button>
+
+        <div className="flex gap-4 text-sm justify-between w-full">
+          <Link href="/reset-password">I forget password ?</Link>
+          <Link href="/register">I dont have account</Link>
         </div>
-      </div>
+      </form>
     </div>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;

@@ -13,7 +13,6 @@ export const asyncRegister = createAsyncThunk("auth/register", async (formData: 
   const { rejectWithValue } = thunkAPI;
   try {
     const res = await API_AXIOS.post("user/register", formData);
-    await API_AXIOS.post("otp/send",formData.email)
     return res.data;
   } catch (error: any) {
     return console.log(rejectWithValue(error)); 
@@ -62,6 +61,7 @@ const authSlice = createSlice({
     builder.addCase(asyncRegister.fulfilled, (state, { payload }) => {
       state.isLoading = false;
       localStorage.setItem('token', payload.token);
+      localStorage.setItem('isVerified', payload.is_verify);
     });
     builder.addCase(
       asyncRegister.rejected,

@@ -1,18 +1,52 @@
-import React, { useEffect } from 'react'
-import { Navigate } from 'react-router';
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSeparator,
+  InputOTPSlot,
+} from "@/components/ui/input-otp";
+import Link from "@/components/ui/link";
+import { AlertCircleIcon } from "lucide-react";
+import React, { useEffect } from "react";
+import { Navigate } from "react-router";
 
 const Otp = () => {
   const tokenStorage = localStorage.getItem("token");
   const isVerified = localStorage.getItem("isVerified") === "0";
   return tokenStorage && isVerified ? (
-        <div>
-      <h1>OTP Page</h1>
-      <p>Please enter your OTP to verify your account.</p>
-      {/* Add your OTP input form here */}
+    <div className="flex min-h-svh flex-col items-center justify-center">
+      <div className='flex flex-col gap-4 w-96 p-4 bg-white rounded-lg shadow-lg items-center'>
+        <Alert variant="default">
+          <AlertCircleIcon />
+          <AlertTitle>OTP Page</AlertTitle>
+          <AlertDescription>Please enter your OTP to verify your account.</AlertDescription>
+        </Alert>
+        <div className="w-full">
+          <InputOTP maxLength={6} className="w-full">
+            <InputOTPGroup className="w-full">
+              <InputOTPSlot index={0} className="w-full"/>
+              <InputOTPSlot index={1} className="w-full"/>
+              <InputOTPSlot index={2} className="w-full"/>
+            </InputOTPGroup>
+            <InputOTPSeparator />
+            <InputOTPGroup className="w-full">
+              <InputOTPSlot index={3} className="w-full"/>
+              <InputOTPSlot index={4} className="w-full"/>
+              <InputOTPSlot index={5}className="w-full"/>
+            </InputOTPGroup>
+          </InputOTP>
+        </div>
+        <Button className="w-full">Submit</Button>
+        <div className="flex gap-4 text-sm justify-between w-full">
+          <Link>Go back to login</Link>
+          <Link>Resend code</Link>
+        </div>
+      </div>
     </div>
   ) : (
     <Navigate to="/" replace />
   );
-}
+};
 
-export default Otp
+export default Otp;

@@ -6,6 +6,20 @@ import {
 import type { FormType } from "./types";
 import { API_AXIOS } from "@/api/API_AXIOS";
 
+//Register thunk
+export const asyncRegister = createAsyncThunk("auth/register", async (formData: FormType, thunkAPI) => {
+  const { rejectWithValue } = thunkAPI;
+  try {
+    const res = await API_AXIOS.post("user/register", formData);
+    return res.data;
+  } catch (error: any) {
+    return rejectWithValue(error.response.data.message);
+  }
+})
+
+
+
+// Login thunk
 export const asyncLogin = createAsyncThunk(
   "auth/login",
   async (formData: FormType, thunkAPI) => {
@@ -41,6 +55,33 @@ const authSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
+    // Register
+    builder.addCase(asyncRegister.pending, (state) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+    builder.addCase(asyncRegister.fulfilled, (state, { payload }) => {
+      state.isLoading = false;
+      state.isAuth = true;
+      localStorage.setItem('token', payload.token);
+      state.token = payload.token;
+    });
+    builder.addCase(
+      asyncRegister.rejected,
+      (state, { payload }: PayloadAction<any>) => {
+        state.isLoading = false;
+        if (payload) {
+          state.error = payload;
+        } else {
+          state.error = "An error occurred during registration.";
+        }
+      }
+    );
+
+
+
+
+
     // Login
     builder.addCase(asyncLogin.pending, (state) => {
       state.isLoading = true;

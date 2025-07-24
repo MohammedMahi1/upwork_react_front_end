@@ -53,9 +53,7 @@ const Login = () => {
           error={errors.password?.message}
         />
 
-        <Button type="submit" size={"lg"} className="w-full">
-          {isLoading ? <Spinner /> : "Login"}
-        </Button>
+        <Button type="submit" size={"lg"} className="w-full" isLoading={isLoading}>Login</Button>
 
         <div className="flex gap-4 text-sm justify-between w-full">
           <Link href="/reset-password">I forget password ?</Link>

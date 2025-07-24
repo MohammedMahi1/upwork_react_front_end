@@ -5,7 +5,6 @@ import Link from '@/components/ui/link'
 import Spinner from '@/components/ui/spinner'
 import { useAppSelector } from '@/hooks/storeHooks'
 import { AlertCircleIcon } from 'lucide-react'
-import React from 'react'
 
 const ForgetPassword = () => {
     const { isLoading, error } = useAppSelector((state) => state.auth);

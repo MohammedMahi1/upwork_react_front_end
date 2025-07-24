@@ -1,13 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Link from "@/components/ui/link";
-import Spinner from "@/components/ui/spinner";
 import { useAppDispatch, useAppSelector } from "@/hooks/storeHooks";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import type { FormType } from "@/modules/auth/types";
 import { asyncLogin } from "@/modules/auth/authSlice";
-import { AlertCircleIcon, CheckCircle2Icon, PopcornIcon } from "lucide-react";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { AlertCircleIcon} from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import {  useNavigate } from "react-router";
 
 const Login = () => {
@@ -16,9 +15,7 @@ const Login = () => {
   const navigate = useNavigate();
   const {
     register,
-    setError,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm<FormType>();
   const onSubmit: SubmitHandler<FormType> = (data) =>

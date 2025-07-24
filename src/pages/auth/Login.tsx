@@ -8,6 +8,7 @@ import type { FormType } from "@/modules/auth/types";
 import { asyncLogin } from "@/modules/auth/authSlice";
 import { AlertCircleIcon, CheckCircle2Icon, PopcornIcon } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import withAuth from "@/middleware/isAuth";
 
 const Login = () => {
   const { isLoading, error } = useAppSelector((state) => state.auth);
@@ -20,7 +21,7 @@ const Login = () => {
     formState: { errors },
   } = useForm<FormType>();
   const onSubmit: SubmitHandler<FormType> = (data) =>
-    dispatch(asyncLogin(data));
+    dispatch(asyncLogin(data)).unwrap().then((e)=>(console.log(e)));
 
   return (
     <div className="flex min-h-svh flex-col items-center justify-center">

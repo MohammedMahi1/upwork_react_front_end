@@ -1,3 +1,4 @@
+import withAuth from "@/middleware/isAuth"
 
 
 const Index = () => {
@@ -6,4 +7,4 @@ const Index = () => {
   )
 }
 
-export default Index
+export default withAuth(Index)

@@ -1,22 +1,11 @@
 import { createBrowserRouter } from "react-router";
-import Login from "../pages/auth/Login";
-import Registre from "@/pages/auth/Registre";
-import ForgetPassword from "@/pages/auth/ForgetPassword";
+import Index from "@/pages/Index";
+import { useAppSelector } from "@/hooks/storeHooks";
+import { authRoutes } from "./auth-routes/auth";
+const { isAuth } = useAppSelector((state) => state.auth);
 
-
-const router = createBrowserRouter([
-    {
-        path:"/",
-        Component:Login
-    },
-    {
-        path:"/register",
-        Component:Registre
-    },
-    {
-        path:"/reset-password",
-        Component:ForgetPassword
-    }
-])
+const router = createBrowserRouter(
+  isAuth ? [{ path: "/", Component: Index }] : authRoutes
+);
 
 export default router;

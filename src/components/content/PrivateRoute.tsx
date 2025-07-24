@@ -1,11 +1,16 @@
+import { Navigate, Outlet } from "react-router";
 
-import { useAppSelector } from '@/hooks/storeHooks';
-import type { RootState } from '@/store/store';
-import { useSelector } from 'react-redux';
-import { Navigate, Outlet } from 'react-router';
-const PrivateRoute = () => {
-  const {isAuth} = useAppSelector((state: RootState) => state.auth);
-  return isAuth ? <Outlet /> : <Navigate to="/" replace />;
+
+// Web:auth routes
+export const PrivateRouteAuth = () => {
+  const tokenStorage = localStorage.getItem("token" );
+  return tokenStorage ? <Outlet /> : <Navigate to="/" replace />;
 };
 
-export default PrivateRoute;
+
+// Web:guest routes
+export const PrivateRouteGuest = () => {
+  const tokenStorage = localStorage.getItem("token" );
+  return tokenStorage ? <Navigate to="/user" replace />:<Outlet /> ;
+};
+

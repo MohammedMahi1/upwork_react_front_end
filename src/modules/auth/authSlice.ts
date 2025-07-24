@@ -24,6 +24,7 @@ type initialState = {
   token: string | null;
 } & FormType;
 
+
 const initialState: initialState = {
   confirmPassword: null,
   email: null,
@@ -38,18 +39,7 @@ const initialState: initialState = {
 const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {
-    loginSuccess(state, action: PayloadAction<{ token: string }>) {
-      state.token = action.payload.token;
-      state.isAuth = true;
-      localStorage.setItem('token', action.payload.token);
-    },
-    logout(state) {
-      state.token = null;
-      state.isAuth = false;
-      localStorage.removeItem('token');
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     // Login
     builder.addCase(asyncLogin.pending, (state) => {
@@ -60,10 +50,9 @@ const authSlice = createSlice({
     builder.addCase(asyncLogin.fulfilled, (state, { payload }) => {
       state.isLoading = false;
       state.isAuth = true;
+      localStorage.setItem('token', payload.token);
+      console.log(state.isAuth);
       state.token = payload.token;
-      state.isAuth = true;
-      localStorage.setItem("isAuth",payload.is_auth.toString());
-      localStorage.setItem("token",payload.token);
     });
 
     builder.addCase(
@@ -79,5 +68,4 @@ const authSlice = createSlice({
     );
   },
 });
-export const { loginSuccess, logout } = authSlice.actions;
 export default authSlice.reducer;

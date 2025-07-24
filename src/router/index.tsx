@@ -3,17 +3,21 @@ import Index from "@/pages/Index";
 import Registre from "@/pages/auth/Registre";
 import ForgetPassword from "@/pages/auth/ForgetPassword";
 import Login from "@/pages/auth/Login";
-import PrivateRoute from "@/components/content/PrivateRoute";
+import { PrivateRouteAuth, PrivateRouteGuest} from "@/components/content/PrivateRoute";
 
 const router = createBrowserRouter(
   [
     {
-      element: <PrivateRoute />,
+      element: <PrivateRouteAuth />,
       children: [
         { path: "/user", Component: Index },
       ],
     },
-    {
+{  
+  
+  element: <PrivateRouteGuest />,
+  children:
+[  {
         path:"/register",
         Component:Registre
     },
@@ -24,7 +28,7 @@ const router = createBrowserRouter(
     {
         path:"/",
         Component:Login
-    }
+    }]}
   ] ,
   
 );

@@ -2,9 +2,9 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import Link from '@/components/ui/link'
 import Spinner from '@/components/ui/spinner'
-import { useState } from 'react'
+import { useAppSelector } from '@/hooks/storeHooks'
 const Login = () => {
-  const [isLoading, setIsLoading] = useState(true);
+  const {isLoading} = useAppSelector(state => state.auth)
   return (
     <div className="flex min-h-svh flex-col items-center justify-center">
       <div className='flex flex-col gap-4 w-96 p-4 bg-white rounded-lg shadow-lg items-center'>

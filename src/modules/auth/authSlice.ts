@@ -10,7 +10,7 @@ export const asyncLogin = createAsyncThunk("auth/login", async (formData: FormTy
         console.log(res);
         
     } catch (error:any) {
-        return rejectWithValue(error.response)
+        return rejectWithValue(error.response.data.message)
         
     }
 });
@@ -43,7 +43,7 @@ const authSlice = createSlice({
         builder.addCase(asyncLogin.rejected, (state, {payload}:PayloadAction<any>) => {
             state.isLoading = false;
             if (payload) {
-                state.error = payload.data;
+                state.error = payload;
             } else {
                 state.error = "An error occurred during login.";
             }

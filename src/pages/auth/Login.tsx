@@ -33,7 +33,7 @@ const Login = () => {
           error && (
             <Alert variant="destructive">
               <AlertCircleIcon />
-              <AlertTitle>{error}</AlertTitle>
+              <AlertDescription>{error}</AlertDescription>
             </Alert>
           )
         }

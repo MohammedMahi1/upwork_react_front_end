@@ -1,10 +1,13 @@
+import { useAppSelector } from "@/hooks/storeHooks";
+import { use } from "react";
 import { Navigate, Outlet } from "react-router";
 
 
 // Web:auth routes
 export const PrivateRouteAuth = () => {
   const tokenStorage = localStorage.getItem("token" );
-  return tokenStorage ? <Outlet /> : <Navigate to="/" replace />;
+  const {isVerified} = useAppSelector((state) => state.user);
+  return tokenStorage && isVerified ? <Outlet /> : <Navigate to="/" replace />;
 };
 
 

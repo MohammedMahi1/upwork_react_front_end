@@ -1,7 +1,8 @@
 import * as React from "react"
 
 import { cn } from "@/lib/utils"
-import { Button } from "./button"
+import { FiEyeOff } from "react-icons/fi";
+import { FiEye } from "react-icons/fi";
 type InputProps = {
   visible?: boolean
 } & React.ComponentProps<"input">
@@ -21,11 +22,12 @@ function Input({ className,type,visible, ...props }: InputProps) {
       {...props}
       />
       {
-        type === "password" && (
-        <Button
-          className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground"
-          onClick={() => setShowPassword(!showPassword)}>{showPassword ? "Hidde":"Show"}</Button>
-        )
+        type === "password" ? 
+                    showPassword ? 
+            <FiEye onClick={()=>setShowPassword(false)} className="absolute right-5 top-0 h-full z-10 cursor-pointer"/>
+            :
+            <FiEyeOff onClick={()=>setShowPassword(false)} className="absolute right-5 top-0 h-full z-10 cursor-pointer"/>: null
+
       }
       </div>
   )

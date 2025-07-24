@@ -6,7 +6,7 @@ const Registre = () => {
   return (
     <div className="flex min-h-svh flex-col items-center justify-center">
       <div className='flex flex-col gap-4 w-96 p-4 bg-white rounded-lg shadow-lg items-center'>
-        <h1 className='text-2xl font-semibold'>Get started with Registre</h1>
+        <h1 className='text-2xl font-semibold'>Create you account by fill forms</h1>
         <Input placeholder='Name' />
         <Input placeholder='Email' />
         <Input placeholder='Password' type='password'/>

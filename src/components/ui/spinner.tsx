@@ -1,4 +1,4 @@
-import  SpinnerLight from "@/assets/spinner-light.svg?react";
+import  SpinnerLight from "@/assets/svg-components/spinner-light.svg?react";
 
 const Spinner = () => {
   return (

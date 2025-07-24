@@ -1,33 +1,25 @@
-import { useAppSelector } from "@/hooks/storeHooks";
-import { useEffect } from "react";
-import { Navigate, Outlet, useNavigate } from "react-router";
+import { Navigate, Outlet } from "react-router";
 
 // Web:auth routes
 export const PrivateRouteAuth = () => {
-    const navigate = useNavigate()
-  const tokenStorage = localStorage.getItem("token");
-  const isVerify  = useAppSelector((state) => state.user.is_verify);
-  useEffect(()=>{
-    if (tokenStorage && isVerify === 0) {
-     navigate("/otp");
-    }
-  },[isVerify, tokenStorage])
 
-  return tokenStorage ?(
+  const tokenStorage = localStorage.getItem("token");
+  const isVerified = localStorage.getItem("isVerified") === "1";
+
+  return tokenStorage &&isVerified ?(
     <Outlet />
   ) : (
     <Navigate to="/" replace />
   );
 };
+
+
 // Web:guest routes
 export const PrivateRouteGuest = () => {
-  const { is_verify } = useAppSelector((state) => state.user);
-  const tokenStorage = localStorage.getItem("token");
-  console.log(is_verify);
 
-  return tokenStorage ? (
-    <Navigate to="/user" replace />
-  ) : (
-    <Outlet />
-  );
+  const tokenStorage = localStorage.getItem("token");
+  const isVerified = localStorage.getItem("isVerified");
+
+  return (tokenStorage && isVerified === "0") ? (<Navigate to="/otp" replace />) : (tokenStorage && isVerified === "1") ? (<Navigate to="/user" replace />) : <Outlet />
+  
 };

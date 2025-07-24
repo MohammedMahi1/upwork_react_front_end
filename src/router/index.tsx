@@ -12,8 +12,12 @@ import Otp from "@/pages/auth/Otp";
 const router = createBrowserRouter([
   {
     element: <PrivateRouteAuth />,
-    children: [{ path: "/user", Component: Index },{ path: "/otp", Component: Otp }]
+    children: [{ path: "/user", Component: Index }],
   },
+        { 
+        path: "/otp", 
+        Component: Otp 
+      },
   {
     element: <PrivateRouteGuest />,
     children: [
@@ -29,6 +33,7 @@ const router = createBrowserRouter([
         path: "/",
         Component: Login,
       },
+
     ],
   },
 ]);

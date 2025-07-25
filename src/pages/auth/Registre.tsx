@@ -13,8 +13,7 @@ import { useNavigate } from "react-router";
 
 const Registre = () => {
   const { isLoading, error } = useAppSelector((state) => state.auth);
-  console.log(error);
-  
+
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const {
@@ -27,8 +26,8 @@ const Registre = () => {
       .unwrap()
       .then(() => navigate("/otp"));
   return (
-    <Container >
-      <Card className="w-full max-w-sm">
+    <Container>
+      <Card className="w-1/4">
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="flex flex-col gap-4 items-center"
@@ -36,19 +35,26 @@ const Registre = () => {
           <h1 className="text-2xl font-semibold">
             Create you account by fill forms
           </h1>
-                  {
-          error && (
+          {error && (
             <Alert variant="destructive">
               <AlertCircleIcon />
               <AlertDescription>{error}</AlertDescription>
             </Alert>
-          )
-        }
-          <Input
-            placeholder="Name"
-            {...register("name", { required: "Name is required" })}
-            error={errors.name?.message}
-          />
+          )}
+          <div className="flex flex-row gap-3">
+            <Input
+              placeholder="First name"
+              {...register("first_name", {
+                required: "First name is required",
+              })}
+              error={errors.first_name?.message}
+            />
+            <Input
+              placeholder="Last name"
+              {...register("last_name", { required: "Last name is required" })}
+              error={errors.last_name?.message}
+            />
+          </div>
           <Input
             placeholder="Email"
             {...register("email", { required: "Email is required" })}

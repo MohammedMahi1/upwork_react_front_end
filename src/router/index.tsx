@@ -1,5 +1,4 @@
 import { createBrowserRouter } from "react-router";
-import Index from "@/pages/Index";
 import Registre from "@/pages/auth/Registre";
 import ForgetPassword from "@/pages/auth/ForgetPassword";
 import Login from "@/pages/auth/Login";
@@ -8,11 +7,12 @@ import {
   PrivateRouteGuest,
 } from "@/components/content/PrivateRoute";
 import Otp from "@/pages/auth/Otp";
+import Dashboard from "@/pages/Dashboard";
 
 const router = createBrowserRouter([
   {
     element: <PrivateRouteAuth />,
-    children: [{ path: "/user", Component: Index }],
+    children: [{ path: "/dashboard", Component: Dashboard }],
   },
   {
     path: "/otp",

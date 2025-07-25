@@ -74,7 +74,7 @@ const otpSlice = createSlice({
         state.isLoading = true;
 
     });
-    builder.addCase(otpVerifyAsync.fulfilled,(state,{payload})=>{
+    builder.addCase(otpVerifyAsync.fulfilled,(state)=>{
         state.isLoading = false
         localStorage.setItem("isVerified","1")
     });
@@ -89,7 +89,7 @@ const otpSlice = createSlice({
         state.isLoading = true;
 
     });
-    builder.addCase(otpResendAsync.fulfilled,(state,{payload})=>{
+    builder.addCase(otpResendAsync.fulfilled,(state)=>{
         state.isLoading = false
     });
     builder.addCase(otpResendAsync.rejected,(state,{ payload }:PayloadAction<any>)=>{

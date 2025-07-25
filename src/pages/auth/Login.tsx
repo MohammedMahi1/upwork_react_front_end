@@ -21,12 +21,12 @@ const Login = () => {
     formState: { errors },
   } = useForm<FormType>();
   const onSubmit: SubmitHandler<FormType> = (data) =>
-    dispatch(asyncLogin(data)).unwrap().then(()=>navigate("/user"));
+    dispatch(asyncLogin(data)).unwrap().then(()=>navigate("/dashboard"));
 
   return (
     <Container items="center">
 
-    <Card >
+    <Card className="w-1/4">
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col gap-4 items-center"

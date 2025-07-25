@@ -1,5 +1,4 @@
 import * as React from "react";
-import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
@@ -51,7 +50,6 @@ function Button({
   children,
   ...props
 }: ButtonProps) {
-  console.log(isLoading);
   
   return (
     <button

@@ -57,7 +57,8 @@ type initialState = {} & FormType;
 const initialState: initialState = {
   password_confirmation: null,
   email: null,
-  name: null,
+  first_name: null,
+  last_name: null,
   password: null,
   isLoading: false,
   error: null,
@@ -122,7 +123,7 @@ const authSlice = createSlice({
       state.error = null;
     });
 
-    builder.addCase(asyncLogout.fulfilled, (state, { payload }) => {
+    builder.addCase(asyncLogout.fulfilled, (state) => {
       state.isLoading = false;
       localStorage.removeItem("token");
       localStorage.removeItem("isVerified");

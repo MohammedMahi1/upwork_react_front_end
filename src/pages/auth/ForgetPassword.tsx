@@ -12,7 +12,7 @@ const ForgetPassword = () => {
     const { isLoading, error } = useAppSelector((state) => state.auth);
   return (
     <Container>
-      <Card>
+      <Card className="w-1/4">
         <h1 className='text-xl font-semibold'>You will resive a link on your email !</h1>
                 {
           error && (

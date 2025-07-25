@@ -12,7 +12,7 @@ import Link from "@/components/ui/link";
 import { useAppDispatch, useAppSelector } from "@/hooks/storeHooks";
 import { otpCancelAsync, otpResendAsync, otpVerifyAsync } from "@/modules/auth/otpSlice";
 import { AlertCircleIcon } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import { Navigate, useNavigate } from "react-router";
 
 const Otp = () => {
@@ -28,7 +28,7 @@ const Otp = () => {
 
   return tokenStorage && isVerified ? (
     <Container items="center">
-      <Card>
+      <Card className="w-1/4">
         <Alert variant={message ? "destructive":"default"}>
           <AlertCircleIcon />
           <AlertTitle>OTP Code</AlertTitle>

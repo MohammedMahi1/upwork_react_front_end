@@ -123,7 +123,7 @@ const authSlice = createSlice({
       state.error = null;
     });
 
-    builder.addCase(asyncLogout.fulfilled, (state, { payload }) => {
+    builder.addCase(asyncLogout.fulfilled, (state) => {
       state.isLoading = false;
       localStorage.removeItem("token");
       localStorage.removeItem("isVerified");

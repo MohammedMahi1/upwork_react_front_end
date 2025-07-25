@@ -26,7 +26,7 @@ const Login = () => {
   return (
     <Container items="center">
 
-    <Card >
+    <Card className="w-1/4">
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col gap-4 items-center"

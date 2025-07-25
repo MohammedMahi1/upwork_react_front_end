@@ -10,12 +10,7 @@ export const otpCancelAsync = createAsyncThunk(
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-      }).then(async () => {
-        await API_AXIOS.delete("user/logout", {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        });
+      }).then((e) => {console.log(e);
       });
     } catch (error) {
       console.log(rejectWithValue(error));
@@ -43,10 +38,9 @@ const otpSlice = createSlice({
       state.isLoading = true;
     });
     builder.addCase(otpCancelAsync.fulfilled, (state, { payload }) => {
-      state.message = payload as string;
+      // state.message = payload as string;
       state.isLoading = false;
-      localStorage.removeItem("token");
-      localStorage.removeItem("isVerified");
+
     });
     builder.addCase(otpCancelAsync.rejected, (state, { payload }) => {
       state.isLoading = false;

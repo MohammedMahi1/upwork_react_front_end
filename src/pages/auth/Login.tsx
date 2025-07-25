@@ -8,6 +8,7 @@ import { asyncLogin } from "@/modules/auth/authSlice";
 import { AlertCircleIcon} from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import {  useNavigate } from "react-router";
+import { Card } from "@/components/ui/card";
 
 const Login = () => {
   const { isLoading, error } = useAppSelector((state) => state.auth);
@@ -22,10 +23,10 @@ const Login = () => {
     dispatch(asyncLogin(data)).unwrap().then(()=>navigate("/user"));
 
   return (
-    <div className="flex min-h-svh flex-col items-center justify-center">
+    <Card className="w-full max-w-sm">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col gap-4 w-96 p-4 bg-white rounded-lg shadow-lg items-center"
+        className="flex flex-col gap-4 items-center"
       >
         <h1 className="text-2xl font-semibold">Get started with login</h1>
         {
@@ -57,7 +58,7 @@ const Login = () => {
           <Link href="/register">I dont have account</Link>
         </div>
       </form>
-    </div>
+    </Card>
   );
 };
 

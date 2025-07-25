@@ -14,10 +14,10 @@ const router = createBrowserRouter([
     element: <PrivateRouteAuth />,
     children: [{ path: "/user", Component: Index }],
   },
-        { 
-        path: "/otp", 
-        Component: Otp 
-      },
+  {
+    path: "/otp",
+    Component: Otp,
+  },
   {
     element: <PrivateRouteGuest />,
     children: [
@@ -33,7 +33,6 @@ const router = createBrowserRouter([
         path: "/",
         Component: Login,
       },
-
     ],
   },
 ]);

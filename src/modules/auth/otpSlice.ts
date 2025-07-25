@@ -6,16 +6,17 @@ export const otpCancelAsync = createAsyncThunk(
   async (_, thunAPI) => {
     const { rejectWithValue } = thunAPI;
     try {
-      console.log("fff");
-      const token = localStorage.getItem("token");      
-
-      const res = await API_AXIOS.post("otp/cancel-otp-creating", {
+      await API_AXIOS.delete("otp/cancel-otp-creating", {
         headers: {
-          'Authorization': `Bearer ${token}` 
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
+      }).then(async () => {
+        await API_AXIOS.delete("user/logout", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
       });
-      console.log(res);
-      return res.data;
     } catch (error) {
       console.log(rejectWithValue(error));
     }
@@ -24,10 +25,12 @@ export const otpCancelAsync = createAsyncThunk(
 
 type initialStateType = {
   message: string | null;
+  isLoading: boolean;
 } & Record<string, any>;
 
 const initialState: initialStateType = {
   message: null,
+  isLoading: false,
 };
 
 const otpSlice = createSlice({
@@ -37,12 +40,16 @@ const otpSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(otpCancelAsync.pending, (state) => {
       state.message = null;
+      state.isLoading = true;
     });
     builder.addCase(otpCancelAsync.fulfilled, (state, { payload }) => {
-      state.message = payload.message;
+      state.message = payload as string;
+      state.isLoading = false;
       localStorage.removeItem("token");
+      localStorage.removeItem("isVerified");
     });
     builder.addCase(otpCancelAsync.rejected, (state, { payload }) => {
+      state.isLoading = false;
       console.log("sdcsdcsd");
       state.message = payload as string;
     });

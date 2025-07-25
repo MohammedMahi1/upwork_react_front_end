@@ -9,6 +9,7 @@ import { useNavigate } from "react-router";
 
 const Registre = () => {
   const { isLoading, error } = useAppSelector((state) => state.auth);
+  const isLoadingOtp = useAppSelector((state) => state.otp.isLoading);
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ const Registre = () => {
   const onSubmit: SubmitHandler<FormType> = (data) =>
     dispatch(asyncRegister(data))
       .unwrap()
-      .then(() => navigate("/user"));
+      .then(() => navigate("/otp"));
   return (
     <div className="flex min-h-svh flex-col items-center justify-center">
       <form

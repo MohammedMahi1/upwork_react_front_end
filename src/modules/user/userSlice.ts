@@ -10,11 +10,7 @@ export const userAsync = createAsyncThunk(
   async (_, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
     try {
-      const res = await API_AXIOS.get("user", {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
+      const res = await API_AXIOS.get("user");
       return res.data.user;
     } catch (error) {
       return rejectWithValue(

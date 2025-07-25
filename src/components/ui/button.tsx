@@ -51,6 +51,8 @@ function Button({
   children,
   ...props
 }: ButtonProps) {
+  console.log(isLoading);
+  
   return (
     <button
       data-slot="button"

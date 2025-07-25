@@ -7,7 +7,7 @@ import {
   InputOTPSlot,
 } from "@/components/ui/input-otp";
 import Link from "@/components/ui/link";
-import { useAppDispatch } from "@/hooks/storeHooks";
+import { useAppDispatch, useAppSelector } from "@/hooks/storeHooks";
 import { otpCancelAsync } from "@/modules/auth/otpSlice";
 import { AlertCircleIcon } from "lucide-react";
 import React, { useEffect } from "react";
@@ -15,6 +15,7 @@ import { Navigate, useNavigate } from "react-router";
 
 const Otp = () => {
   const tokenStorage = localStorage.getItem("token");
+  const {isLoading} = useAppSelector((state) => state.otp);
   const isVerified = localStorage.getItem("isVerified") === "0";
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -41,9 +42,9 @@ const Otp = () => {
             </InputOTPGroup>
           </InputOTP>
         </div>
-        <Button className="w-full">Submit</Button>
+        <Button className="w-full" isLoading={isLoading}>Submit</Button>
         <div className="flex gap-4 text-sm justify-between w-full">
-          <Link onClick={()=>{dispatch(otpCancelAsync())}}>Go back to login</Link>
+          <Link onClick={()=>{dispatch(otpCancelAsync()).unwrap().then(()=>navigate("/"))}}>Go back to login</Link>
           <Link>Resend code</Link>
         </div>
       </div>

@@ -4,7 +4,7 @@ type LinksProps = {} & React.ComponentProps<"a">
 
 const Link = ({children,...rest}:LinksProps) => {
   return (
-    <a className='text-black hover:underline ' {...rest}>
+    <a className='text-black hover:underline cursor-pointer ' {...rest}>
         {children}
     </a>
   )

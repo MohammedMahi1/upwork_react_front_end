@@ -25,7 +25,7 @@ export const PrivateRouteGuest = () => {
   return tokenStorage && isVerified === "0" ? (
     <Navigate to="/otp" replace />
   ) : tokenStorage && isVerified === "1" ? (
-    <Navigate to="/user" replace />
+    <Navigate to="/dashboard" replace />
   ) : (
     <>
       <Outlet />

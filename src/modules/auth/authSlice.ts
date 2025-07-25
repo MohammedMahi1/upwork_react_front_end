@@ -57,7 +57,8 @@ type initialState = {} & FormType;
 const initialState: initialState = {
   password_confirmation: null,
   email: null,
-  name: null,
+  first_name: null,
+  last_name: null,
   password: null,
   isLoading: false,
   error: null,

@@ -26,14 +26,16 @@ export const userAsync = createAsyncThunk(
 
 type initialState = {
   id: string | null;
-  name: string | null;
+  first_name: string | null;
+  last_name: string | null;
   email: string | null;
   is_verify: number;
   isLoading: boolean;
 };
 
 const initialState: initialState = {
-  name: null,
+  first_name: null,
+  last_name: null,
   email: null,
   id: null,
   is_verify: 0,
@@ -54,7 +56,8 @@ const userSlice = createSlice({
 
         state.isLoading = false;
         state.id = payload.id;
-        state.name = payload.name;
+        state.first_name = payload.first_name;
+        state.last_name = payload.last_name;
         state.email = payload.email;
         state.is_verify = payload.is_verify;
       }

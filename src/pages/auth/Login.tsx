@@ -21,7 +21,7 @@ const Login = () => {
     formState: { errors },
   } = useForm<FormType>();
   const onSubmit: SubmitHandler<FormType> = (data) =>
-    dispatch(asyncLogin(data)).unwrap().then(()=>navigate("/user"));
+    dispatch(asyncLogin(data)).unwrap().then(()=>navigate("/dashboard"));
 
   return (
     <Container items="center">

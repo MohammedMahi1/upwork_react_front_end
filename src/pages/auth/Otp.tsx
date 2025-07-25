@@ -23,7 +23,7 @@ const Otp = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const handleSubmit = () => {
-    dispatch(otpVerifyAsync(otps)).unwrap().then(()=>navigate("/user"));
+    dispatch(otpVerifyAsync(otps)).unwrap().then(()=>navigate("/dashboard"));
   };
 
   return tokenStorage && isVerified ? (

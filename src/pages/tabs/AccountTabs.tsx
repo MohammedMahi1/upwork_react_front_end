@@ -9,12 +9,13 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {TabsContent } from "@/components/ui/tabs";
+import { TabsContent } from "@/components/ui/tabs";
+import { Textarea } from "@/components/ui/textarea";
 import { useAppSelector } from "@/hooks/storeHooks";
-import {  useState } from "react";
+import { useState } from "react";
 
 const AccountTab = () => {
-  const { email, first_name, last_name } = useAppSelector( 
+  const { email, first_name, last_name, bio } = useAppSelector(
     (state) => state.user
   );
   const [isEdit, setIsEdit] = useState(false);
@@ -42,18 +43,28 @@ const AccountTab = () => {
             </div>
             <div className="grid gap-3 w-full">
               <Label htmlFor="tabs-demo-last-name">Last name</Label>
-              {
-                isEdit ? 
-              <Input id="last-name" defaultValue={last_name as string} />
-                :
+              {isEdit ? (
+                <Input id="last-name" defaultValue={last_name as string} />
+              ) : (
                 <CardDescription>{last_name}</CardDescription>
-
-              }
+              )}
             </div>
           </div>
+          {isEdit ? (
+            <div className="grid gap-3 w-full">
+              <Label>Bio</Label>
+              <Textarea placeholder={bio as string} maxLength={300}className="h-full max-h-[150px] min-h-[100px]"/>
+            </div>
+          ) : (
+            bio
+          )}
           <div className="grid gap-3">
             <Label htmlFor="email">Email</Label>
-            {isEdit ? <Input id="email" defaultValue={email as string} />:<CardDescription>{email}</CardDescription>}
+            {isEdit ? (
+              <Input id="email" defaultValue={email as string} />
+            ) : (
+              <CardDescription>{email}</CardDescription>
+            )}
           </div>
         </CardContent>
         <CardFooter>
@@ -76,4 +87,4 @@ const AccountTab = () => {
     </TabsContent>
   );
 };
-export default AccountTab
+export default AccountTab;

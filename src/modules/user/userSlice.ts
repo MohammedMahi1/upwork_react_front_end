@@ -1,4 +1,5 @@
 import { API_AXIOS } from "@/api/API_AXIOS";
+import type { User } from "@/types/User";
 import {
   createAsyncThunk,
   createSlice,
@@ -25,17 +26,15 @@ export const userAsync = createAsyncThunk(
 );
 
 type initialState = {
-  id: string | null;
-  first_name: string | null;
-  last_name: string | null;
-  email: string | null;
-  is_verify: number;
   isLoading: boolean;
-};
+}& User
 
 const initialState: initialState = {
   first_name: null,
   last_name: null,
+  bio:null,
+  img_name:null,
+  img_url:null,
   email: null,
   id: null,
   is_verify: 0,
@@ -58,6 +57,9 @@ const userSlice = createSlice({
         state.id = payload.id;
         state.first_name = payload.first_name;
         state.last_name = payload.last_name;
+        state.bio = payload.bio;
+        state.img_url = payload.img_url;
+        state.img_name = payload.img_name;
         state.email = payload.email;
         state.is_verify = payload.is_verify;
       }

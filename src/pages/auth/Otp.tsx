@@ -1,5 +1,7 @@
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import Container from "@/components/ui/container";
 import {
   InputOTP,
   InputOTPGroup,
@@ -20,8 +22,10 @@ const Otp = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   return tokenStorage && isVerified ? (
-    <div className="flex min-h-svh flex-col items-center justify-center">
-      <div className='flex flex-col gap-4 w-96 p-4 bg-white rounded-lg shadow-lg items-center'>
+    <Container items="center">
+
+    <Card>
+
         <Alert variant="default">
           <AlertCircleIcon />
           <AlertTitle>OTP Page</AlertTitle>
@@ -47,8 +51,8 @@ const Otp = () => {
           <Link onClick={()=>{dispatch(otpCancelAsync()).unwrap().then(()=>navigate("/"))}}>Go back to login</Link>
           <Link>Resend code</Link>
         </div>
-      </div>
-    </div>
+    </Card>
+    </Container>
   ) : (
     <Navigate to="/" replace />
   );

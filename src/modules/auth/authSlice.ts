@@ -15,7 +15,7 @@ export const asyncRegister = createAsyncThunk("auth/register", async (formData: 
     const res = await API_AXIOS.post("user/register", formData);
     return res.data;
   } catch (error: any) {
-    return console.log(rejectWithValue(error)); 
+    return rejectWithValue(error.response.data.message)
   }
 })
 
@@ -74,9 +74,6 @@ const authSlice = createSlice({
         }
       }
     );
-
-
-
 
 
     // Login

@@ -9,6 +9,7 @@ import { AlertCircleIcon} from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import {  useNavigate } from "react-router";
 import { Card } from "@/components/ui/card";
+import Container from "@/components/ui/container";
 
 const Login = () => {
   const { isLoading, error } = useAppSelector((state) => state.auth);
@@ -23,11 +24,13 @@ const Login = () => {
     dispatch(asyncLogin(data)).unwrap().then(()=>navigate("/user"));
 
   return (
-    <Card className="w-full max-w-sm">
+    <Container items="center">
+
+    <Card >
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col gap-4 items-center"
-      >
+        >
         <h1 className="text-2xl font-semibold">Get started with login</h1>
         {
           error && (
@@ -42,14 +45,14 @@ const Login = () => {
           type="email"
           {...register("email", { required: "Email is required" })}
           error={errors.email?.message}
-        />
+          />
 
         <Input
           placeholder="Password"
           type="password"
           {...register("password", { required: "Password is required" })}
           error={errors.password?.message}
-        />
+          />
 
         <Button type="submit" size={"lg"} className="w-full" isLoading={isLoading}>Login</Button>
 
@@ -59,6 +62,7 @@ const Login = () => {
         </div>
       </form>
     </Card>
+          </Container>
   );
 };
 

@@ -6,14 +6,14 @@ export const otpCancelAsync = createAsyncThunk(
   async (_, thunAPI) => {
     const { rejectWithValue } = thunAPI;
     try {
-      await API_AXIOS.delete("otp/cancel-otp-creating", {
+      const res= await API_AXIOS.delete("otp/cancel-otp-creating", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-      }).then((e) => {console.log(e);
-      });
+      })
+      return res.data
     } catch (error) {
-      console.log(rejectWithValue(error));
+      return rejectWithValue(error)
     }
   }
 );
@@ -38,9 +38,10 @@ const otpSlice = createSlice({
       state.isLoading = true;
     });
     builder.addCase(otpCancelAsync.fulfilled, (state, { payload }) => {
-      // state.message = payload as string;
+      state.message = payload.message as string
       state.isLoading = false;
-
+      localStorage.removeItem("token")
+      localStorage.removeItem("isVerified")
     });
     builder.addCase(otpCancelAsync.rejected, (state, { payload }) => {
       state.isLoading = false;

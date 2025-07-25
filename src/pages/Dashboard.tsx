@@ -8,7 +8,6 @@ import OptionTab from "./tabs/OptionTabs";
 import PasswordTab from "./tabs/PasswordTab";
 import AccountTab from "./tabs/AccountTabs";
 
-import { useTheme } from "@/theme/provider-theme";
 
 const Dashboard = () => {
   const dispatch = useAppDispatch();

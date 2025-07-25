@@ -6,13 +6,29 @@ import {
   type PayloadAction,
 } from "@reduxjs/toolkit";
 
+export const updateProfileAsync = createAsyncThunk(
+  "user/userProfile",
+  async (formData: object, thunkAPI) => {
+    const { rejectWithValue } = thunkAPI;
+    try {
+      const res = await API_AXIOS.put("user/update/profile", formData, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      return res.data;
+    } catch (error) {
+      return console.log(rejectWithValue(error));
+    }
+  }
+);
 export const userAsync = createAsyncThunk(
   "user/getUser",
   async (_, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
     try {
-      const res = await API_AXIOS.get("user",{
-                headers: {
+      const res = await API_AXIOS.get("user", {
+        headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
@@ -27,18 +43,20 @@ export const userAsync = createAsyncThunk(
 
 type initialState = {
   isLoading: boolean;
-}& User
+  error?: string | null;
+} & User;
 
 const initialState: initialState = {
   first_name: null,
   last_name: null,
-  bio:null,
-  img_name:null,
-  img_url:null,
+  bio: null,
+  img_name: null,
+  img_url: null,
   email: null,
   id: null,
   is_verify: 0,
   isLoading: false,
+  error: null,
 };
 
 const userSlice = createSlice({
@@ -46,13 +64,13 @@ const userSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
+    // User Data
     builder.addCase(userAsync.pending, (state) => {
       state.isLoading = true;
     });
     builder.addCase(
       userAsync.fulfilled,
       (state, { payload }: PayloadAction<initialState>) => {
-
         state.isLoading = false;
         state.id = payload.id;
         state.first_name = payload.first_name;
@@ -65,6 +83,21 @@ const userSlice = createSlice({
       }
     );
     builder.addCase(userAsync.rejected, (state, action) => {
+      state.isLoading = false;
+      console.error("Error fetching user:", action.payload);
+    });
+
+    builder.addCase(updateProfileAsync.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(
+      updateProfileAsync.fulfilled,
+      (state, { payload }: PayloadAction<initialState>) => {
+        state.isLoading = false;
+        state.error = payload.error;
+      }
+    );
+    builder.addCase(updateProfileAsync.rejected, (state, action) => {
       state.isLoading = false;
       console.error("Error fetching user:", action.payload);
     });

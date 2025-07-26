@@ -59,7 +59,7 @@ function Button({
     >
       {
       isLoading ? 
-          <Spinner />
+          <Spinner className="px-4" />
       : 
         children
       }

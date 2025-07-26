@@ -12,6 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { useAppDispatch, useAppSelector } from "@/hooks/storeHooks";
 import { sendForgetPassword } from "@/modules/auth/forgotPassword";
+import { Label } from "@radix-ui/react-dropdown-menu";
 import type { ReactNode } from "react";
 
 type AlertProps = {
@@ -20,9 +21,7 @@ type AlertProps = {
 
 export function PasswordAlertDialog({ trigger }: AlertProps) {
   const { email } = useAppSelector((state) => state.user);
-  const { isLoading, error, message } = useAppSelector(
-    (state) => state.resetPassword
-  );
+  const { isLoading, error, message } = useAppSelector((state) => state.resetPassword);
 
   const dispatch = useAppDispatch();
   const sendForgetPAssowrd = () => {
@@ -33,7 +32,7 @@ export function PasswordAlertDialog({ trigger }: AlertProps) {
     }
   };
   console.log(email);
-  
+
 
   return (
     <AlertDialog>
@@ -42,7 +41,7 @@ export function PasswordAlertDialog({ trigger }: AlertProps) {
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription>
-            This action will send a link on your mail,checkout your mail after
+            This action will send a link on your <span className="underline">{email}</span><br />checkout your mail after
             action
           </AlertDialogDescription>
         </AlertDialogHeader>

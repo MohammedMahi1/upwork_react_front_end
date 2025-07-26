@@ -51,12 +51,12 @@ const OptionTab = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   return (
-    <TabsContent value="option" className="w-130">
+    <TabsContent value="options" className="w-130">
       <Card>
         <CardHeader>
           <CardTitle>Options</CardTitle>
           <CardDescription>
-            Change your password here. After saving, youll be logged out.
+            Manage your application settings here.
           </CardDescription>
         </CardHeader>
         <CardContent className="grid gap-6">

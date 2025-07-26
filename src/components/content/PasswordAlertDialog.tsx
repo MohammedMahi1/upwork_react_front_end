@@ -33,7 +33,7 @@ export function PasswordAlertDialog({ trigger }: AlertProps) {
     }
   };
   console.log(email);
-  // console.log(message);
+  
 
   return (
     <AlertDialog>

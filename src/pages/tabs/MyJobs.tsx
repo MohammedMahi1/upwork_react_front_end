@@ -20,6 +20,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { TabsContent } from "@/components/ui/tabs";
+import { Textarea } from "@/components/ui/textarea";
 import { Plus } from "lucide-react";
 const DialogAddJob = () => {
   return (
@@ -42,6 +43,9 @@ const DialogAddJob = () => {
         <div className="grid gap-4">
           <Label>Job Title</Label>
           <Input />
+          <Label>Job Description</Label>
+          <Textarea />
+
           <Button>Add This Job</Button>
         </div>
       </DialogContent>

@@ -1,4 +1,4 @@
-import { Alert, AlertTitle } from "@/components/ui/alert";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import Container from "@/components/ui/container";
@@ -11,7 +11,7 @@ import { useForm, type SubmitHandler } from "react-hook-form";
 import { useNavigate, useSearchParams } from "react-router";
 
 const ResetPassowrd = () => {
-  const { isLoading, error } = useAppSelector((state) => state.auth);
+  const { isLoading, error,message } = useAppSelector((state) => state.resetPassword);
   const [searchParams] = useSearchParams();
   const token = searchParams.get("token");
   const email = searchParams.get("email");
@@ -24,10 +24,12 @@ const ResetPassowrd = () => {
     } = useForm<FormType>();
     const onSubmit: SubmitHandler<FormType> = (data) =>dispatch(updateForgotedPassowrd({
         ...data,
-        token: token as string,
-        email: email as string,
-    })).then(() => {
-      navigate("/");
+        token: token ,
+        email: email,
+    })).unwrap().then(() => {
+        navigate("/")
+    }).catch((err) => {
+        console.log(err);
     });
   return (
     <Container>
@@ -38,7 +40,7 @@ const ResetPassowrd = () => {
         {error && (
           <Alert variant="destructive">
             <AlertCircleIcon />
-            <AlertTitle>{error}</AlertTitle>
+            <AlertDescription>{error}</AlertDescription>
           </Alert>
         )}
         <Input

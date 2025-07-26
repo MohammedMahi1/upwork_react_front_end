@@ -1,6 +1,9 @@
 import { API_AXIOS } from "@/api/API_AXIOS";
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
+
+
+// This function sends a request to the server to initiate the password reset process
 export const sendForgetPassword = createAsyncThunk(
   "forget/send",
   async (email:object, thunkAPI) => {
@@ -8,11 +11,14 @@ export const sendForgetPassword = createAsyncThunk(
     try {
       const res = await API_AXIOS.post("user/forgot-password", email);
       return res.data;
-    } catch (error) {
-      return rejectWithValue(error);
+    } catch (error:any) {
+      return rejectWithValue(error.response.data.message);
     }
   }
 );
+
+
+// This function updates the password after the user has forgotten it
 export const updateForgotedPassowrd = createAsyncThunk(
   "forget/update",
   async (formData:object, thunkAPI) => {
@@ -20,8 +26,9 @@ export const updateForgotedPassowrd = createAsyncThunk(
     try {
       const res = await API_AXIOS.post("user/reset-password", formData);
       return res.data;
-    } catch (error) {
-      return rejectWithValue(error);
+      
+    } catch (error :any) {
+      return rejectWithValue(error.response.data.message);
     }
   }
 );
@@ -44,14 +51,14 @@ const forgetPassword = createSlice({
   extraReducers: (builder) => {
 
 
-    // Send request forgeting password
+    // Update forgot password
     builder.addCase(updateForgotedPassowrd.pending, (state) => {
       state.isLoading = true;
     });
 
     builder.addCase(updateForgotedPassowrd.fulfilled, (state, { payload }) => {
       state.isLoading = false;
-      state.message = payload as string;
+      state.message = payload ;
     });
 
     builder.addCase(updateForgotedPassowrd.rejected, (state, { payload }) => {
@@ -69,12 +76,15 @@ const forgetPassword = createSlice({
 
     builder.addCase(sendForgetPassword.fulfilled, (state, { payload }) => {
       state.isLoading = false;
-      state.message = payload as string;
+      state.message = payload.message;
+      console.log(payload);
+      
     });
 
-    builder.addCase(sendForgetPassword.rejected, (state, { payload }) => {
+    builder.addCase(sendForgetPassword.rejected, (state, { payload }:PayloadAction<any>) => {
       state.isLoading = false;
-      state.error = payload as string;
+      state.error = payload ;
+    
     });
 
   },

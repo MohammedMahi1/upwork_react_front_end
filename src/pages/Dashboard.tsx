@@ -7,8 +7,8 @@ import { useEffect } from "react";
 import OptionTab from "./tabs/OptionTabs";
 import PasswordTab from "./tabs/PasswordTab";
 import AccountTab from "./tabs/AccountTabs";
+import MyJobs from "./tabs/MyJobs";
 
-import { useTheme } from "@/theme/provider-theme";
 
 const Dashboard = () => {
   const dispatch = useAppDispatch();
@@ -21,12 +21,14 @@ const Dashboard = () => {
       <Tabs defaultValue="account">
         <TabsList>
           <TabsTrigger value="account">Account</TabsTrigger>
+          <TabsTrigger value="my-jobs">My Jobs</TabsTrigger>
           <TabsTrigger value="password">Password</TabsTrigger>
-          <TabsTrigger value="option">option</TabsTrigger>
+          <TabsTrigger value="options">Options</TabsTrigger>
         </TabsList>
         <AccountTab />
         <PasswordTab />
         <OptionTab />
+        <MyJobs/>
       </Tabs>
     </Container>
   );

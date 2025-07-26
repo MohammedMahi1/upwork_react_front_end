@@ -2,12 +2,14 @@ import { configureStore } from '@reduxjs/toolkit'
 import authSlice from '@/modules/auth/authSlice'
 import userSlice from '@/modules/user/userSlice'
 import otpSlice from '@/modules/auth/otpSlice'
+import forgetPassword from '@/modules/auth/forgotPassword'
 
 export const store = configureStore({
   reducer: {
     auth:authSlice,
     user:userSlice,
-    otp:otpSlice
+    otp:otpSlice,
+    resetPassword:forgetPassword
   },
 })
 

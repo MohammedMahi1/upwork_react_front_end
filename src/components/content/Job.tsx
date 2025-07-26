@@ -15,7 +15,7 @@ const Job = () => {
 
         </CardContent>
          <CardFooter>
-                <Badge>pendding</Badge>
+                <Badge className='bg-amber-400 text-amber-800'>pendding</Badge>
             </CardFooter>
     </Card>
   )

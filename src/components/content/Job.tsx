@@ -1,11 +1,23 @@
-import React from 'react'
-import { Label } from '../ui/label'
+
+import { Alert, AlertDescription, AlertTitle } from '../ui/alert'
+import { AlertDialogHeader } from '../ui/alert-dialog'
+import { Badge } from '../ui/badge'
+import { Card, CardContent, CardDescription, CardFooter } from '../ui/card'
 
 const Job = () => {
   return (
-    <div>
-        <Label>Job Title</Label>
-    </div>
+    <Card className='mb-2 py-3 px-4 border-dashed gap-2'>
+        <AlertTitle>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque animi quaerat perferendis asperiores maxime ullam amet quidem aspernatur natus, officiis totam. Fugiat doloremque, laboriosam perferendis recusandae in pariatur. Error, ea. </AlertTitle>
+        <CardContent>
+            <CardDescription>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est nihil quaerat quo eaque ea consectetur expedita sit exercitationem placeat earum beatae accusantium, nemo in minus, velit sapiente rem suscipit quibusdam.
+            </CardDescription>
+
+        </CardContent>
+         <CardFooter>
+                <Badge>pendding</Badge>
+            </CardFooter>
+    </Card>
   )
 }
 

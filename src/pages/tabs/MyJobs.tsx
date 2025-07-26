@@ -8,7 +8,14 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -18,23 +25,26 @@ const DialogAddJob = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline" className="w-10 border-dashed h-10 rounded-full  ">
-            <Plus />
+        <Button
+          variant="outline"
+          className="w-10 border-dashed h-10 rounded-full  "
+        >
+          <Plus />
         </Button>
       </DialogTrigger>
-       <DialogContent className="sm:max-w-[425px]">
-          <DialogHeader>
-            <DialogTitle>Add Job</DialogTitle>
-            <DialogDescription>
-                Create a new job listing to attract potential candidates.
-            </DialogDescription>
-          </DialogHeader>
-          <div className="grid gap-4">
-            <Label>Job Title</Label>
-            <Input />
-            <Button>Add This Job</Button>
-          </div>
-          </DialogContent>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>Add Job</DialogTitle>
+          <DialogDescription>
+            Create a new job listing to attract potential candidates.
+          </DialogDescription>
+        </DialogHeader>
+        <div className="grid gap-4">
+          <Label>Job Title</Label>
+          <Input />
+          <Button>Add This Job</Button>
+        </div>
+      </DialogContent>
     </Dialog>
   );
 };
@@ -51,9 +61,12 @@ const MyJobs = () => {
           <DialogAddJob />
         </CardContent>
         <CardFooter>
-              <ScrollArea className="h-100 w-full">
-<Job/>
-              </ScrollArea>
+          <ScrollArea className="h-100 w-full ">
+            <Job />
+            <Job />
+            <Job />
+            <Job />
+          </ScrollArea>
         </CardFooter>
       </Card>
     </TabsContent>

@@ -1,4 +1,4 @@
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import Container from "@/components/ui/container";
@@ -11,7 +11,7 @@ import { useForm, type SubmitHandler } from "react-hook-form";
 import { useNavigate, useSearchParams } from "react-router";
 
 const ResetPassowrd = () => {
-  const { isLoading, error,message } = useAppSelector((state) => state.resetPassword);
+  const { isLoading, error } = useAppSelector((state) => state.resetPassword);
   const [searchParams] = useSearchParams();
   const token = searchParams.get("token");
   const email = searchParams.get("email");
@@ -37,12 +37,14 @@ const ResetPassowrd = () => {
         <h1 className="text-xl font-semibold">
           Change your password
         </h1>
-        {error && (
+        {
+        error && (
           <Alert variant="destructive">
             <AlertCircleIcon />
             <AlertDescription>{error}</AlertDescription>
           </Alert>
-        )}
+        )
+        }
         <Input
           placeholder="Enter Your New Password"
           type="password"

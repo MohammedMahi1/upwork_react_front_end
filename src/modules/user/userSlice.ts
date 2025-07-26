@@ -6,7 +6,6 @@ import {
   type PayloadAction,
 } from "@reduxjs/toolkit";
 
-
 export const updatePasswordAsync = createAsyncThunk(
   "user/updateUserPassword",
   async (formData: object, thunkAPI) => {
@@ -18,14 +17,13 @@ export const updatePasswordAsync = createAsyncThunk(
         },
       });
       console.log(res.data);
-      
+
       return res.data;
     } catch (error) {
-      return rejectWithValue(error)
+      return rejectWithValue(error);
     }
   }
 );
-
 
 export const updateProfileAsync = createAsyncThunk(
   "user/userProfile",
@@ -43,7 +41,6 @@ export const updateProfileAsync = createAsyncThunk(
     }
   }
 );
-
 
 export const userAsync = createAsyncThunk(
   "user/getUser",
@@ -66,8 +63,8 @@ export const userAsync = createAsyncThunk(
 
 type initialState = {
   isLoading: boolean;
-  error?: string | null ;
-  message?:string | null;
+  error?: string | null;
+  message?: string | null;
 } & User;
 
 const initialState: initialState = {
@@ -81,17 +78,17 @@ const initialState: initialState = {
   is_verify: 0,
   isLoading: false,
   error: null,
-  message:null
+  message: null,
 };
 
 const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    clearErrorAndMessage:(state)=>{
-      state.error = null
-      state.message = null
-    }
+    clearErrorAndMessage: (state) => {
+      state.error = null;
+      state.message = null;
+    },
   },
   extraReducers: (builder) => {
     // User Data
@@ -120,6 +117,8 @@ const userSlice = createSlice({
     //Update Profile
     builder.addCase(updateProfileAsync.pending, (state) => {
       state.isLoading = true;
+      state.error = null;
+      state.message = null;
     });
     builder.addCase(
       updateProfileAsync.fulfilled,
@@ -136,19 +135,19 @@ const userSlice = createSlice({
     //Update Current Password
     builder.addCase(updatePasswordAsync.pending, (state) => {
       state.isLoading = true;
+      state.error = null;
+      state.message = null;
     });
-    builder.addCase(updatePasswordAsync.fulfilled,(state,{payload}) => {
-        state.isLoading = false;
-        state.message = payload.message
-      }
-    );
-    builder.addCase(updatePasswordAsync.rejected, (state, {payload}:any) => {
+    builder.addCase(updatePasswordAsync.fulfilled, (state, { payload }) => {
       state.isLoading = false;
-      state.error = payload.response.data.message
+      state.message = payload.message;
+    });
+    builder.addCase(updatePasswordAsync.rejected, (state, { payload }: any) => {
+      state.isLoading = false;
+      state.error = payload.response.data.message;
       console.log(payload.response.data);
-
     });
   },
 });
-export const {clearErrorAndMessage} = userSlice.actions
+export const { clearErrorAndMessage } = userSlice.actions;
 export default userSlice.reducer;

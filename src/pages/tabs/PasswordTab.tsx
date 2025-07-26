@@ -14,7 +14,11 @@ import { Label } from "@/components/ui/label";
 import Link from "@/components/ui/link";
 import { TabsContent } from "@/components/ui/tabs";
 import { useAppDispatch, useAppSelector } from "@/hooks/storeHooks";
-import { clearErrorAndMessage, updatePasswordAsync, userAsync } from "@/modules/user/userSlice";
+import {
+  clearErrorAndMessage,
+  updatePasswordAsync,
+  userAsync,
+} from "@/modules/user/userSlice";
 
 import { useForm, type SubmitHandler } from "react-hook-form";
 type PasswordUpdate = {
@@ -24,10 +28,11 @@ type PasswordUpdate = {
 };
 const PasswordTab = () => {
   const dispatch = useAppDispatch();
-  const { error, isLoading,message } = useAppSelector((state) => state.user);
+  const { error, isLoading, message } = useAppSelector((state) => state.user);
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<PasswordUpdate>();
   const onSubmit: SubmitHandler<PasswordUpdate> = (data) =>
@@ -35,22 +40,25 @@ const PasswordTab = () => {
       .unwrap()
       .then(() => {
         dispatch(userAsync());
+        setValue('current_password',null);
+        setValue('new_password',null);
+        setValue('new_password_confirmation',null);
+        setTimeout(() => {
+          dispatch(clearErrorAndMessage());
+        }, 5000);
       })
       .catch(() => {
-          setTimeout(() => {
-            dispatch(clearErrorAndMessage())
-          }, 5000);
-
+        setTimeout(() => {
+          dispatch(clearErrorAndMessage());
+        }, 5000);
       });
-      
+
   return (
     <TabsContent value="password" className="w-130">
       <Card>
         <CardHeader>
           <CardTitle>Password</CardTitle>
-          <CardDescription>
-            Change your password here. After saving, you&apos;ll be logged out.
-          </CardDescription>
+          <CardDescription>Change your password here.</CardDescription>
         </CardHeader>
         <CardContent className="grid gap-6">
           <div className="grid gap-3">
@@ -63,8 +71,7 @@ const PasswordTab = () => {
               })}
               error={errors.current_password?.message}
             />
-            <PasswordAlertDialog trigger={<Link>Forget Password ?</Link>}/>
-            
+            <PasswordAlertDialog trigger={<Link>Forget Password ?</Link>} />
           </div>
           <div className="grid gap-3">
             <Label htmlFor="new-password">New password</Label>

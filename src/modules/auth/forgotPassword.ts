@@ -13,6 +13,19 @@ export const sendForgetPassword = createAsyncThunk(
     }
   }
 );
+export const updateForgotedPassowrd = createAsyncThunk(
+  "forget/update",
+  async (formData:object, thunkAPI) => {
+    const { rejectWithValue } = thunkAPI;
+    try {
+      const res = await API_AXIOS.post("user/reset-password", formData);
+      return res.data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
 type InitialStateType = {
   isLoading: boolean;
   error: string | null;
@@ -29,6 +42,24 @@ const forgetPassword = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
+
+
+    // Send request forgeting password
+    builder.addCase(updateForgotedPassowrd.pending, (state) => {
+      state.isLoading = true;
+    });
+
+    builder.addCase(updateForgotedPassowrd.fulfilled, (state, { payload }) => {
+      state.isLoading = false;
+      state.message = payload as string;
+    });
+
+    builder.addCase(updateForgotedPassowrd.rejected, (state, { payload }) => {
+      state.isLoading = false;
+      state.error = payload as string;
+    });
+
+
 
 
     // Send request forgeting password

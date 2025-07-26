@@ -1,6 +1,5 @@
 import {
   AlertDialog,
-  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
@@ -12,8 +11,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { useAppDispatch, useAppSelector } from "@/hooks/storeHooks";
 import { sendForgetPassword } from "@/modules/auth/forgotPassword";
-import { Label } from "@radix-ui/react-dropdown-menu";
-import type { ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 
 type AlertProps = {
   trigger: ReactNode;
@@ -21,12 +19,14 @@ type AlertProps = {
 
 export function PasswordAlertDialog({ trigger }: AlertProps) {
   const { email } = useAppSelector((state) => state.user);
-  const { isLoading, error, message } = useAppSelector((state) => state.resetPassword);
-
+  const { isLoading } = useAppSelector((state) => state.resetPassword);
+  const [isOPen, setIsOpen] = useState(false);
   const dispatch = useAppDispatch();
   const sendForgetPAssowrd = () => {
     if (email) {
-      dispatch(sendForgetPassword({ email: email }));
+      dispatch(sendForgetPassword({ email: email })).unwrap().then(() => {
+        setIsOpen(false);
+      });
     } else {
       return console.log("Enter your email");
     }
@@ -35,7 +35,7 @@ export function PasswordAlertDialog({ trigger }: AlertProps) {
 
 
   return (
-    <AlertDialog>
+    <AlertDialog open={isOPen} onOpenChange={setIsOpen}>
       <AlertDialogTrigger asChild>{trigger}</AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>

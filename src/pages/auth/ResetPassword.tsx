@@ -3,15 +3,12 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import Container from "@/components/ui/container";
 import { Input } from "@/components/ui/input";
-import Link from "@/components/ui/link";
-import Spinner from "@/components/ui/spinner";
 import { useAppDispatch, useAppSelector } from "@/hooks/storeHooks";
 import { updateForgotedPassowrd } from "@/modules/auth/forgotPassword";
 import type { FormType } from "@/modules/auth/types";
-import type { ResetPasswordParams } from "@/types/ResetPasswordParams";
 import { AlertCircleIcon } from "lucide-react";
 import { useForm, type SubmitHandler } from "react-hook-form";
-import { useNavigate, useParams, useSearchParams } from "react-router";
+import { useNavigate, useSearchParams } from "react-router";
 
 const ResetPassowrd = () => {
   const { isLoading, error } = useAppSelector((state) => state.auth);

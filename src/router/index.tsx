@@ -8,6 +8,7 @@ import {
 } from "@/components/content/PrivateRoute";
 import Otp from "@/pages/auth/Otp";
 import Dashboard from "@/pages/Dashboard";
+import ResetPassowrd from "@/pages/auth/ResetPassword";
 
 const router = createBrowserRouter([
   {
@@ -19,8 +20,16 @@ const router = createBrowserRouter([
     Component: Otp,
   },
   {
+    path: "/update-password",
+    Component: ResetPassowrd,
+  },
+  {
     element: <PrivateRouteGuest />,
     children: [
+      {
+        path: "/",
+        Component: Login,
+      },
       {
         path: "/register",
         Component: Registre,
@@ -28,10 +37,6 @@ const router = createBrowserRouter([
       {
         path: "/reset-password",
         Component: ForgetPassword,
-      },
-      {
-        path: "/",
-        Component: Login,
       },
     ],
   },

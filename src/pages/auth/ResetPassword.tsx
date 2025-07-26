@@ -6,14 +6,20 @@ import { Input } from '@/components/ui/input'
 import Link from '@/components/ui/link'
 import Spinner from '@/components/ui/spinner'
 import { useAppSelector } from '@/hooks/storeHooks'
+import type { ResetPasswordParams } from '@/types/ResetPasswordParams'
 import { AlertCircleIcon } from 'lucide-react'
+import { useParams, useSearchParams } from 'react-router'
 
-const ResetPAssowrd = () => {
-    const { isLoading, error } = useAppSelector((state) => state.auth);
+
+const ResetPassowrd = () => {
+    const { isLoading, error } = useAppSelector((state) => state.auth);      
+  const [searchParams] = useSearchParams();
+  const token = searchParams.get("token");
+  const email = searchParams.get("email");
   return (
     <Container>
       <Card className="w-1/4">
-        <h1 className='text-xl font-semibold'>Change your password</h1>
+        <h1 className='text-xl font-semibold'>Change your password {token} in mail {email}</h1>
                 {
           error && (
             <Alert variant="destructive">
@@ -35,4 +41,4 @@ const ResetPAssowrd = () => {
   )
 }
 
-export default ResetPAssowrd
+export default ResetPassowrd

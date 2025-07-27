@@ -24,7 +24,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useAppDispatch, useAppSelector } from "@/hooks/storeHooks";
 import { addJobAsync, jobAsync } from "@/modules/transport/jobSlice";
 import type { JobType } from "@/types/JobType";
-import { Plus } from "lucide-react";
+import { Filter, Plus } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Form, useForm, type SubmitHandler } from "react-hook-form";
 type JobTypeForm = {} & Omit<JobType, "id" | "postedDate" | "status">;
@@ -49,14 +49,23 @@ const DialogAddJob = () => {
       });
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger asChild>
+      <div className="flex justify-between items-center">
         <Button
-          variant="outline"
-          className="w-10 border-dashed h-10 rounded-full  "
+        variant={"ghost"}
+        >
+          <Filter />
+          Filter
+        </Button>
+        <DialogTrigger asChild>
+        <Button
+                    variant="outline"
+            className="border-dashed"
         >
           <Plus />
+          Add Job
         </Button>
-      </DialogTrigger>
+        </DialogTrigger>
+      </div>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Add Job</DialogTitle>

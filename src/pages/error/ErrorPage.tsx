@@ -7,7 +7,6 @@ import {
 } from "@/components/ui/card";
 import Container from "@/components/ui/container";
 import { AlertCircle } from "lucide-react";
-import React, { use } from "react";
 import { useNavigate } from "react-router";
 
 const ErrorPage = () => {

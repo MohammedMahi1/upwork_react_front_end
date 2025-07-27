@@ -1,3 +1,4 @@
+
 import Job from "@/components/content/Job";
 import { Button } from "@/components/ui/button";
 import {
@@ -21,6 +22,7 @@ import { Label } from "@/components/ui/label";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { TabsContent } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
+import { useAppSelector } from "@/hooks/storeHooks";
 import { Plus } from "lucide-react";
 const DialogAddJob = () => {
   return (
@@ -54,6 +56,7 @@ const DialogAddJob = () => {
 };
 
 const MyJobs = () => {
+  const { jobs, isLoading, error } = useAppSelector((state) => state.job);
   return (
     <TabsContent value="my-jobs" className="w-130">
       <Card>
@@ -66,10 +69,16 @@ const MyJobs = () => {
         </CardContent>
         <CardFooter>
           <ScrollArea className="h-100 w-full ">
-            <Job />
-            <Job />
-            <Job />
-            <Job />
+            {jobs.map((job) => (
+              <Job
+                id={job.id}
+                key={job.id}
+                title={job.title}
+                description={job.description}
+                status={job.status}
+                postedDate={job.postedDate}
+              />
+            ))}
           </ScrollArea>
         </CardFooter>
       </Card>

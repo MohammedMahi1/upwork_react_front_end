@@ -8,6 +8,7 @@ import OptionTab from "./tabs/OptionTabs";
 import PasswordTab from "./tabs/PasswordTab";
 import AccountTab from "./tabs/AccountTabs";
 import MyJobs from "./tabs/MyJobs";
+import { jobAsync } from "@/modules/transport/jobSlice";
 
 
 const Dashboard = () => {
@@ -15,6 +16,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     dispatch(userAsync());
+    dispatch(jobAsync());
   }, [dispatch]);
   return (
     <Container>

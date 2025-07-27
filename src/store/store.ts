@@ -3,13 +3,15 @@ import authSlice from '@/modules/auth/authSlice'
 import userSlice from '@/modules/user/userSlice'
 import otpSlice from '@/modules/auth/otpSlice'
 import forgetPassword from '@/modules/auth/forgotPassword'
+import jobSlice from '@/modules/transport/jobSlice'
 
 export const store = configureStore({
   reducer: {
     auth:authSlice,
     user:userSlice,
     otp:otpSlice,
-    resetPassword:forgetPassword
+    resetPassword:forgetPassword,
+    job:jobSlice,
   },
 })
 

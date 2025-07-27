@@ -19,6 +19,19 @@ export const jobAsync = createAsyncThunk(
   }
 );
 
+export const addJobAsync = createAsyncThunk("transport/addJob", async (job: Omit<JobType,"id" | "postedDate" | "status">, thunkAPI) => {
+  const { rejectWithValue } = thunkAPI;
+    try {
+        const res = await API_AXIOS.post("/transport/jobs/add", job, {
+        headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        });
+        return res.data;
+    } catch (error) {
+        return rejectWithValue(error);
+    }
+})
 
 type initialStateType = {
   jobs: JobType[];
@@ -51,6 +64,22 @@ const jobSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload as string;
       });
+
+
+      // Handle the addJobAsync thunk
+    builder
+      .addCase(addJobAsync.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(addJobAsync.fulfilled, (state) => {
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(addJobAsync.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as string;
+      })
   },
 });
 

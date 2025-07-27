@@ -1,7 +1,7 @@
 export type JobType = {
   id: number | null;
-  title: string | null;
-  description: string | null;
-  status: "pending" | "assigned" | "completed";
+  job_title: string | null;
+  job_description: string | null;
+  job_status: "pending" | "assigned" | "completed";
   postedDate: string | null;
 };

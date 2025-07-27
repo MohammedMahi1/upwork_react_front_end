@@ -69,6 +69,7 @@ const authSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
+    
     // Register
     builder.addCase(asyncRegister.pending, (state) => {
       state.isLoading = true;

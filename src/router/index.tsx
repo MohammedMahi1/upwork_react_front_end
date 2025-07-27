@@ -16,7 +16,6 @@ const router = createBrowserRouter([
     element: <PrivateRouteAuth />,
     children: [{ path: "/dashboard", Component: Dashboard }],
         ErrorBoundary: ErrorPage,
-
   },
   {
     path: "/otp",

@@ -1,3 +1,4 @@
+import AvatarFile from "@/components/content/AvatarFile";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -50,15 +51,12 @@ const AccountTab = () => {
           {isLoading ? (
             <Skeleton className="w-24 h-24 rounded-full" />
           ) : (
-            <Avatar className="w-24 h-24">
-              <AvatarImage src={img_url} alt={img_name as string} />
-              <AvatarFallback className="text-3xl">
-                {
+            <AvatarFile src={img_url} alt={img_name as string} >
+                              {
                   ((first_name?.slice(0, 1) as string) +
                     last_name?.slice(0, 1)) as string
                 }
-              </AvatarFallback>
-            </Avatar>
+            </AvatarFile>
           )}
           <div className="flex flex-row gap-2 w-full">
             <div className="grid gap-3 w-full">

@@ -61,6 +61,24 @@ export const userAsync = createAsyncThunk(
   }
 );
 
+// Add image for profile 
+export const uploadImageAsync = createAsyncThunk(
+  "user/uploadImage",
+  async (formData: FormData, thunkAPI) => {
+    const { rejectWithValue } = thunkAPI;
+    try {
+      const res = await API_AXIOS.post("user/add-image", formData, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      return res.data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
 type initialState = {
   isLoading: boolean;
   error?: string | null;
@@ -94,8 +112,7 @@ const userSlice = createSlice({
     // User Data
     builder.addCase(userAsync.pending, (state) => {
       state.isLoading = true;
-    });
-    builder.addCase(
+    }).addCase(
       userAsync.fulfilled,
       (state, { payload }: PayloadAction<initialState>) => {
         state.isLoading = false;
@@ -108,8 +125,7 @@ const userSlice = createSlice({
         state.email = payload.email;
         state.is_verify = payload.is_verify;
       }
-    );
-    builder.addCase(userAsync.rejected, (state, action) => {
+    ).addCase(userAsync.rejected, (state, action) => {
       state.isLoading = false;
       console.error("Error fetching user:", action.payload);
     });
@@ -119,15 +135,13 @@ const userSlice = createSlice({
       state.isLoading = true;
       state.error = null;
       state.message = null;
-    });
-    builder.addCase(
+    }).addCase(
       updateProfileAsync.fulfilled,
       (state, { payload }: PayloadAction<initialState>) => {
         state.isLoading = false;
         state.error = payload.error;
       }
-    );
-    builder.addCase(updateProfileAsync.rejected, (state, action) => {
+    ).addCase(updateProfileAsync.rejected, (state, action) => {
       state.isLoading = false;
       console.error("Error fetching user:", action.payload);
     });
@@ -137,15 +151,32 @@ const userSlice = createSlice({
       state.isLoading = true;
       state.error = null;
       state.message = null;
-    });
-    builder.addCase(updatePasswordAsync.fulfilled, (state, { payload }) => {
+    }).addCase(updatePasswordAsync.fulfilled, (state, { payload }) => {
       state.isLoading = false;
       state.message = payload.message;
-    });
-    builder.addCase(updatePasswordAsync.rejected, (state, { payload }: any) => {
+    }).addCase(updatePasswordAsync.rejected, (state, { payload }: any) => {
       state.isLoading = false;
       state.error = payload.response.data.message;
       console.log(payload.response.data);
+    });
+
+    // Upload Image
+    builder.addCase(uploadImageAsync.pending, (state) => {
+      state.isLoading = true;
+      state.error = null;
+      state.message = null;
+    }).addCase(
+      uploadImageAsync.fulfilled,
+      (state, { payload }: PayloadAction<{ img_url: string; img_name: string }>) => {
+        state.isLoading = false;
+        state.img_url = payload.img_url;
+        state.img_name = payload.img_name;
+        state.message = "Image uploaded successfully";
+    }).addCase(
+      uploadImageAsync.rejected, (state, { payload }: PayloadAction<any>) => {
+        state.isLoading = false;
+        state.error = payload.response.data.message;
+        console.log(payload.response.data);
     });
   },
 });

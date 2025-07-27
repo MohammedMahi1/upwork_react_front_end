@@ -72,7 +72,7 @@ const initialState: initialState = {
   last_name: null,
   bio: null,
   img_name: null,
-  img_url: null,
+  img_url: "",
   email: null,
   id: null,
   is_verify: 0,

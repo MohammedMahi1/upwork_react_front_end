@@ -1,22 +1,31 @@
-
 import type { JobType } from "@/types/JobType";
 import { AlertTitle } from "../ui/alert";
 import { Badge } from "../ui/badge";
 import { Card, CardContent, CardDescription, CardFooter } from "../ui/card";
 import { cn } from "@/lib/utils";
-const Job = ({ job_description, id, postedDate, job_status, job_title }: JobType) => {
+import { Label } from "../ui/label";
+import { Check, Clock, Pen } from "lucide-react";
+const Job = ({
+  job_description,
+  id,
+  created_at,
+  job_status,
+  job_title,
+}: JobType) => {
   return (
-    <Card className="mb-2 py-3 px-4 border-dashed gap-2" key={id}>
-      <AlertTitle>{job_title}</AlertTitle>
+    <Card className="mb-2 py-3 px-4 gap-2" key={id}>
+      <div className="flex items-center gap-3">
+        <Label>Status</Label>
+        <Badge variant={"outline"} className={cn("border-dashed",job_status === "pending"? "border-yellow-500": job_status === "assigned" ? "border-blue-500" : "border-green-500")}>
+          {job_status === "pending" ? <Clock /> : job_status === "assigned" ? <Pen/> :job_status === "completed"&&<Check/>}
+          {job_status}
+        </Badge>
+      </div>
+      <AlertTitle className="text-2xl">{job_title}</AlertTitle>
       <CardContent>
-        <CardDescription>
-          {job_description}
-          {postedDate}
-        </CardDescription>
+        <CardDescription>{job_description}</CardDescription>
       </CardContent>
-      <CardFooter>
-        <Badge className={cn("bg-amber-300 text-amber-800",job_status === "assigned" ?"bg-blue-300 text-blue-800" : job_status === "completed" && "bg-green-300 text-green-800")}>{job_status}</Badge>
-      </CardFooter>
+      <CardFooter></CardFooter>
     </Card>
   );
 };

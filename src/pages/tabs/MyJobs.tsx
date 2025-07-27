@@ -107,7 +107,7 @@ const MyJobs = () => {
                 job_title={job.job_title}
                 job_description={job.job_description}
                 job_status={job.job_status}
-                postedDate={job.postedDate}
+                created_at={job.created_at}
               />
             ))}
           </ScrollArea>

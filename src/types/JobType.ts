@@ -3,5 +3,5 @@ export type JobType = {
   job_title: string | null;
   job_description: string | null;
   job_status: "pending" | "assigned" | "completed";
-  postedDate: string | null;
+  created_at: Date | string | number;
 };

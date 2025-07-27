@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Skeleton } from "@/components/ui/skeleton";
 import { TabsContent } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import { useAppDispatch, useAppSelector } from "@/hooks/storeHooks";
@@ -18,7 +19,7 @@ import { useState } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
 
 const AccountTab = () => {
-  const { email, first_name, last_name, bio,isLoading } = useAppSelector(
+  const { email, first_name, last_name, bio, isLoading } = useAppSelector(
     (state) => state.user
   );
   const dispatch = useAppDispatch();
@@ -31,11 +32,10 @@ const AccountTab = () => {
   const onSubmit: SubmitHandler<FormType> = (data) =>
     dispatch(updateProfileAsync(data))
       .unwrap()
-      .then(()=>{
+      .then(() => {
         dispatch(userAsync());
-        setIsEdit(false)
+        setIsEdit(false);
       });
-  
 
   return (
     <TabsContent value="account" className="w-130">
@@ -47,71 +47,91 @@ const AccountTab = () => {
           </CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col gap-6 ">
-            <div className="flex flex-row gap-2 w-full">
-              <div className="grid gap-3 w-full">
-                <Label htmlFor="tabs-demo-first-name">First name</Label>
-                {isEdit ? (
-                  <Input
+          <div className="flex flex-row gap-2 w-full">
+            <div className="grid gap-3 w-full">
+              <Label htmlFor="tabs-demo-first-name">First name</Label>
+              {isEdit ? (
+                <Input
                   id="tabs-demo-first-name"
                   error={errors.first_name?.message}
                   defaultValue={first_name as string}
-                    {...register("first_name")}
-                  />
-                ) : (
-                  <CardDescription>{first_name}</CardDescription>
-                )}
-              </div>
-              <div className="grid gap-3 w-full">
-                <Label htmlFor="tabs-demo-last-name">Last name</Label>
-                {isEdit ? (
-                  <Input id="last-name"
-                  error={errors.last_name?.message}
-                    defaultValue={last_name as string}
-                    {...register("last_name")}
-                    />
-                ) : (
-                  <CardDescription>{last_name}</CardDescription>
-                )}
-              </div>
-            </div>
-            {isEdit ? (
-              <div className="grid gap-3 w-full">
-                <Label>Bio</Label>
-                <Textarea
-                  maxLength={300}
-                  className="h-full max-h-[150px] min-h-[100px]"
-                    defaultValue={bio as string}
-                    {...register("bio")}
+                  {...register("first_name")}
                 />
-            </div>
-            ) : bio ? 
-            (
-              <div className="grid gap-3 w-full">
-                <Label>Bio</Label>
-                  <CardDescription>{bio}</CardDescription>
-            </div>
-            )
-            :null}
-            <div className="grid gap-3">
-              <Label htmlFor="email">Email</Label>
-              {isEdit ? (
-                <Input id="email" 
-                                  error={errors.email?.message}
-                    defaultValue={email as string}
-                    {...register("email")}
-                />
+              ) : isLoading ? (
+                <Skeleton className="w-40 h-5 " />
               ) : (
-                <CardDescription>{email}</CardDescription>
+                <CardDescription>{first_name}</CardDescription>
               )}
             </div>
+            <div className="grid gap-3 w-full">
+              <Label htmlFor="tabs-demo-last-name">Last name</Label>
+              {isEdit ? (
+                <Input
+                  id="last-name"
+                  error={errors.last_name?.message}
+                  defaultValue={last_name as string}
+                  {...register("last_name")}
+                />
+              ) : isLoading ? (
+                <Skeleton className="w-40 h-5 " />
+              ) : (
+                <CardDescription>{last_name}</CardDescription>
+              )}
+            </div>
+          </div>
+          {isEdit ? (
+            <div className="grid gap-3 w-full">
+              <Label>Bio</Label>
+              <Textarea
+                maxLength={300}
+                className="h-full max-h-[150px] min-h-[100px]"
+                defaultValue={bio as string}
+                {...register("bio")}
+              />
+            </div>
+          ) : isLoading ? (
+            <div className="grid gap-3">
+              <Label>Bio</Label>
+              <Skeleton className="w-full h-20 " />
+            </div>
+          ) : bio ? (
+            <div className="grid gap-3">
+              <Label>Bio</Label>
+              <CardDescription>{first_name}</CardDescription>
+            </div>
+          ) : null}
+          <div className="grid gap-3">
+            <Label htmlFor="email">Email</Label>
+            {isEdit ? (
+              <Input
+                id="email"
+                error={errors.email?.message}
+                defaultValue={email as string}
+                {...register("email")}
+              />
+            ) : isLoading ? (
+              <Skeleton className="w-60 h-5 " />
+            ) : (
+              <CardDescription>{email}</CardDescription>
+            )}
+          </div>
         </CardContent>
         <CardFooter>
           {isEdit ? (
             <div className="flex gap-2">
-              <Button isLoading={isLoading} variant="default" type="submit" onClick={handleSubmit(onSubmit)}>
+              <Button
+                isLoading={isLoading}
+                variant="default"
+                type="submit"
+                onClick={handleSubmit(onSubmit)}
+              >
                 Save
               </Button>
-              <Button variant="destructive" type="button" onClick={() => setIsEdit(false)}>
+              <Button
+                variant="destructive"
+                type="button"
+                onClick={() => setIsEdit(false)}
+              >
                 Cancel
               </Button>
             </div>

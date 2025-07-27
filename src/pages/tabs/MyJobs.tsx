@@ -1,4 +1,5 @@
 import Job from "@/components/content/Job";
+import { PopOverFilter } from "@/components/content/PopOverFilter";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -19,14 +20,15 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Skeleton } from "@/components/ui/skeleton";
 import { TabsContent } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import { useAppDispatch, useAppSelector } from "@/hooks/storeHooks";
 import { addJobAsync, jobAsync } from "@/modules/transport/jobSlice";
 import type { JobType } from "@/types/JobType";
-import { Filter, Plus } from "lucide-react";
-import { useEffect, useState } from "react";
-import { Form, useForm, type SubmitHandler } from "react-hook-form";
+import { Plus } from "lucide-react";
+import { useState } from "react";
+import { useForm, type SubmitHandler } from "react-hook-form";
 type JobTypeForm = {} & Omit<JobType, "id" | "postedDate" | "status">;
 const DialogAddJob = () => {
   const { isLoading } = useAppSelector((state) => state.job);
@@ -50,20 +52,12 @@ const DialogAddJob = () => {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <div className="flex justify-between items-center">
-        <Button
-        variant={"ghost"}
-        >
-          <Filter />
-          Filter
-        </Button>
+        <PopOverFilter />
         <DialogTrigger asChild>
-        <Button
-                    variant="outline"
-            className="border-dashed"
-        >
-          <Plus />
-          Add Job
-        </Button>
+          <Button variant="outline" className="border-dashed">
+            <Plus />
+            Add Job
+          </Button>
         </DialogTrigger>
       </div>
       <DialogContent className="sm:max-w-[425px]">
@@ -92,11 +86,8 @@ const DialogAddJob = () => {
 };
 
 const MyJobs = () => {
-  const { jobs, isLoading, error } = useAppSelector((state) => state.job);
-  const dispatch = useAppDispatch();
-  useEffect(() => {
-    dispatch(jobAsync());
-  }, [dispatch]);
+  const { jobs, isLoading } = useAppSelector((state) => state.job);
+
   return (
     <TabsContent value="my-jobs" className="w-130">
       <Card>
@@ -109,16 +100,24 @@ const MyJobs = () => {
         </CardContent>
         <CardFooter>
           <ScrollArea className="h-100 w-full ">
-            {jobs.map((job) => (
-              <Job
-                id={job.id}
-                key={job.id}
-                job_title={job.job_title}
-                job_description={job.job_description}
-                job_status={job.job_status}
-                created_at={job.created_at}
-              />
-            ))}
+            {isLoading ? (
+              <>
+                <Skeleton className="w-full h-30 mb-2" />
+                <Skeleton className="w-full h-30 mb-2" />
+                <Skeleton className="w-full h-30 mb-2" />
+              </>
+            ) : (
+              jobs.map((job) => (
+                <Job
+                  id={job.id}
+                  key={job.id}
+                  job_title={job.job_title}
+                  job_description={job.job_description}
+                  job_status={job.job_status}
+                  created_at={job.created_at}
+                />
+              ))
+            )}
           </ScrollArea>
         </CardFooter>
       </Card>

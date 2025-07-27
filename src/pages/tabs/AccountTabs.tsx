@@ -97,7 +97,7 @@ const AccountTab = () => {
           ) : bio ? (
             <div className="grid gap-3">
               <Label>Bio</Label>
-              <CardDescription>{first_name}</CardDescription>
+              <CardDescription>{bio}</CardDescription>
             </div>
           ) : null}
           <div className="grid gap-3">

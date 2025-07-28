@@ -64,7 +64,7 @@ export const userAsync = createAsyncThunk(
 // Add image for profile 
 export const uploadImageAsync = createAsyncThunk(
   "user/uploadImage",
-  async (formData: FormData, thunkAPI) => {
+  async (formData: object, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
     try {
       const res = await API_AXIOS.post("user/add-image", formData, {

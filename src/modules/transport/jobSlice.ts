@@ -19,7 +19,8 @@ export const jobAsync = createAsyncThunk(
   }
 );
 
-export const addJobAsync = createAsyncThunk("transport/addJob", async (job: Omit<JobType,"id" | "postedDate" | "status">, thunkAPI) => {
+export const addJobAsync = createAsyncThunk("transport/addJob", 
+  async (job: Omit<JobType,"id" | "postedDate" | "status">, thunkAPI) => {
   const { rejectWithValue } = thunkAPI;
     try {
         const res = await API_AXIOS.post("/transport/jobs/add", job, {
@@ -47,8 +48,22 @@ const initialState: initialStateType = {
 const jobSlice = createSlice({
   name: "job",
   initialState,
-  reducers: {},
+  reducers: {
+    filterJobs: (state, action) => {
+      state.jobs = state.jobs.sort((a,_) =>{
+        if (action.payload === "completed") {
+          return a.job_status === "completed" ? -1 : 1;
+        } else if (action.payload === "pending") {
+          return a.job_status === "pending" ? -1 : 1;
+        }
+        else if (action.payload === "assigned") {
+          return a.job_status === "assigned" ? -1 : 1;
+        }return 0;
+      } );    
+    }
+  },
   extraReducers: (builder) => {
+    
     // Handle the jobAsync thunk
     builder
       .addCase(jobAsync.pending, (state) => {
@@ -82,5 +97,5 @@ const jobSlice = createSlice({
       })
   },
 });
-
+export const { filterJobs } = jobSlice.actions;
 export default jobSlice.reducer;

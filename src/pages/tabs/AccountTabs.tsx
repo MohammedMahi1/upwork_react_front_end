@@ -1,3 +1,4 @@
+import AvatarFile from "@/components/content/AvatarFile";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -19,9 +20,8 @@ import { useState } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
 
 const AccountTab = () => {
-  const { email, first_name, last_name, bio, isLoading } = useAppSelector(
-    (state) => state.user
-  );
+  const { email, first_name, last_name, bio, img_url, img_name, isLoading } =
+    useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
   const [isEdit, setIsEdit] = useState(false);
   const {
@@ -47,6 +47,16 @@ const AccountTab = () => {
           </CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col gap-6 ">
+          {isLoading ? (
+            <Skeleton className="w-24 h-24 rounded-full" />
+          ) : (
+            <AvatarFile src={img_url} alt={img_name as string} >
+                              {
+                  ((first_name?.slice(0, 1) as string) +
+                    last_name?.slice(0, 1)) as string
+                }
+            </AvatarFile>
+          )}
           <div className="flex flex-row gap-2 w-full">
             <div className="grid gap-3 w-full">
               <Label htmlFor="tabs-demo-first-name">First name</Label>
@@ -97,7 +107,7 @@ const AccountTab = () => {
           ) : bio ? (
             <div className="grid gap-3">
               <Label>Bio</Label>
-              <CardDescription>{first_name}</CardDescription>
+              <CardDescription>{bio}</CardDescription>
             </div>
           ) : null}
           <div className="grid gap-3">

@@ -8,11 +8,11 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
+
 // Web:auth routes
 export const PrivateRouteAuth = () => {
   const tokenStorage = localStorage.getItem("token");
   const isVerified = localStorage.getItem("isVerified") === "1";
-
   return tokenStorage && isVerified ? <Outlet /> : <Navigate to="/" replace />;
 };
 

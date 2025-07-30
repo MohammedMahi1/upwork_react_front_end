@@ -9,11 +9,13 @@ import {
 import Otp from "@/pages/auth/Otp";
 import Dashboard from "@/pages/Dashboard";
 import ResetPassowrd from "@/pages/auth/ResetPassword";
+import ErrorPage from "@/pages/error/ErrorPage";
 
 const router = createBrowserRouter([
   {
     element: <PrivateRouteAuth />,
     children: [{ path: "/dashboard", Component: Dashboard }],
+        ErrorBoundary: ErrorPage,
   },
   {
     path: "/otp",
@@ -29,6 +31,7 @@ const router = createBrowserRouter([
       {
         path: "/",
         Component: Login,
+        ErrorBoundary: ErrorPage,
       },
       {
         path: "/register",

@@ -4,7 +4,7 @@ export type User = {
   last_name: string | null;
   email: string | null;
   bio: string | null;
-  img_url: string | null;
+  img_url: string  ;
   img_name: string | null;
   is_verify: number;
 };

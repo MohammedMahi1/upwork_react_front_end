@@ -13,6 +13,10 @@ export const store = configureStore({
     resetPassword:forgetPassword,
     job:jobSlice,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
 })
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
